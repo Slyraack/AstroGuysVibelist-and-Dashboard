@@ -1,0 +1,206 @@
+header.head {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    backdrop-filter: blur(6px);
+}
+
+.list .MuiDrawer-paperAnchorDockedLeft,
+.list .MuiDrawer-paperAnchorLeft {
+    background-color: #050c28;
+}
+
+.hr {
+    background: #ffffff8a;
+    width: 178px;
+}
+
+.active {
+    color: #fff !important;
+    text-decoration: none;
+    /* box-shadow: 0px 3.500000238418579px 5.500000476837158px 0px #00000005; */
+    background: #253069;
+}
+
+.active .svg-icon {
+    fill: #fff !important;
+    background: #0075ff;
+}
+
+.non-active {
+    color: #fff;
+    text-decoration: none;
+    margin: 30px 20px;
+}
+
+.navlink-list a {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 6px 10px;
+    border-radius: 10px;
+    margin: 20px 20px;
+    /* font-family: Plus Jakarta Sans; */
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 14px;
+    letter-spacing: 0em;
+    text-align: left;
+
+
+}
+
+.svg-icon {
+    margin-right: 15px;
+    fill: #0075ff !important;
+    background: #1a1f37;
+    border-radius: 8px;
+    padding: 5px;
+    font-size: 30px !important;
+}
+
+.account {
+    color: #fff;
+    text-align: center !important;
+    /* margin-left: 30px ;  */
+    /* font-family: Plus Jakarta Sans; */
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 18px;
+    letter-spacing: 0em;
+    text-align: left;
+
+}
+
+.doc-img-div img {
+    object-fit: cover;
+}
+
+.need-help {
+    /* font-family: Plus Jakarta Sans; */
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: left;
+    margin: 10px 0px;
+    color: #fff;
+}
+
+.pls-chk {
+    /* font-family: Plus Jakarta Sans; */
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 12px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #fff;
+    margin: 6px 0px;
+}
+
+.dov-btn-div button,
+.dov-btn-div button:hover {
+    background-color: #000;
+    color: #fff;
+    padding: 12px 40px;
+    cursor: pointer;
+    border-radius: 15px;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 10px;
+    letter-spacing: 0em;
+    text-align: center;
+    margin: 6px 8px;
+}
+
+.minilogo {
+    text-align: left;
+}
+
+.doc-content {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+}
+
+.sidebar-list ul {
+    text-align: center;
+}
+
+.user-name {
+    font-family: Helvetica;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 21px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #fff;
+    cursor: pointer;
+
+}
+
+.user-name span {
+    opacity: 65%;
+}
+
+.connet-wallet {
+    /* font-family: Plus Jakarta Sans; */
+    color: #fff;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 21px;
+    letter-spacing: 0em;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    opacity: 65%;
+    cursor: pointer;
+
+}
+
+.head-text-sidebar {
+
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.connet-wallet svg {
+    font-size: 18px;
+}
+
+.sidebar-backarrow {
+    color: #fff;
+    /* text-align: right; */
+    margin: 15px 15px;
+    /* display: flex; */
+    justify-content: flex-end;
+    transition: rotate(90deg) !important;
+    transform: rotate(180deg);
+}
+
+.connect-bef::before {
+    content: '';
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    background-color: greenyellow;
+    border-radius: 30px;
+    left: -11px;
+    top: 12px;
+}
+
+.connect-bef {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+}
+
+.navlink-list.cw {
+    margin: 25px 0px;
+}
+
+.w-id {
+    margin: 5px 0px;
+}

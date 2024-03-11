@@ -1,0 +1,82 @@
+@media all and (max-width:575.98px) {
+    .generate-stable {
+        width: 100% !important;
+    }
+
+    .buy-pallet-main-div {
+        flex-direction: column !important;
+        align-items: center !important;
+
+    }
+
+    .start-earning,
+    .became-astro {
+        text-align: center !important;
+        margin: 8px 0px;
+    }
+
+    .earnings-main-div {
+        align-items: center;
+        gap: 20px;
+        flex-direction: column !important;
+    }
+
+    .cpy-name,
+    .follow-astro {
+        justify-content: center !important;
+        text-align: center !important;
+    }
+
+    .buy-pallet-btn button {
+        padding: 15px 50px !important;
+    }
+
+    .connect-compas {
+        text-align: center;
+    }
+
+    .you-collect-whole-div {
+        padding: 20px 10px !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 15px !important;
+    }
+
+    .stack-tacb-c1 {
+        flex-direction: column;
+    }
+
+    .Stacking>.MuiBox-root {
+        display: block;
+    }
+}
+
+@media all and (max-width:767.98px) {
+    .connet-wallet span {
+        display: none !important;
+    }
+}
+
+
+
+
+@media all and (max-width:991.98px) {
+    .stack-tab-footer-main {
+        flex-direction: column !important;
+        gap: 15px !important;
+    }
+}
+
+@media (min-width:575.98px) and (max-width:991.98px) {
+    .generate-stable {
+        width: 65% !important;
+    }
+
+
+}
+
+@media (min-width:991.98px) and (max-width: 1349.98px) {
+    .generate-stable {
+        width: 60% !important;
+    }
+}

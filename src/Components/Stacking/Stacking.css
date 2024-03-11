@@ -1,0 +1,887 @@
+.st-c1 {
+    background-image: url('../../Img/st-c1.webp');
+    background-position: inherit;
+    object-fit: cover;
+    width: 100%;
+    /* height: 247px; */
+    background-repeat: no-repeat;
+    border-radius: 15px;
+    background-size: cover;
+}
+
+.coming-soon {
+    /* font-family: Plus Jakarta Sans; */
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 14px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+.sei-liquid {
+    /* font-family: Plus Jakarta Sans; */
+    color: #fff;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 28px;
+    letter-spacing: 0em;
+    text-align: left;
+    align-items: start;
+}
+
+.read {
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 12px;
+    letter-spacing: 0em;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+
+}
+
+.st-c1 .display {
+    display: flex;
+    flex-direction: column;
+    /* width: 45%; */
+    gap: 15px;
+    padding: 25px 25px;
+    justify-content: flex-start
+}
+
+.content-sct-1 {
+    /* font-family: Plus Jakarta Sans; */
+    color: #fff;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+    opacity: 50%;
+}
+
+.st-c2-amount-text {
+    /* font-family: Plus Jakarta Sans */
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+.st-c2-amount {
+    /* font-family: Plus Jakarta Sans; */
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 45px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #fff;
+    flex-direction: row !important;
+    align-items: center !important;
+}
+
+.st-c2-amount span {
+    /* font-family: Plus Jakarta Sans; */
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 22px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: greenyellow;
+    padding-left: 5px;
+}
+
+.st-c2-sub-amount {
+    /* font-family: Plus Jakarta Sans; */
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 16px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #fff;
+    opacity: 50%;
+
+}
+
+
+.st-c2 {
+    background: #0a193ac2;
+    border-radius: 15px;
+    padding: 30px 15px;
+}
+
+.st-c2 div {
+    display: flex;
+    flex-direction: column;
+    align-items: self-start;
+    gap: 15px;
+}
+
+.stack-pool {
+    /* font-family: Plus Jakarta Sans; */
+    font-size: 36px;
+    color: #fff;
+    font-weight: 700;
+    line-height: 36px;
+    letter-spacing: 0em;
+    text-align: left;
+    display: flex;
+    justify-content: center;
+    margin-top: 70px;
+}
+
+
+.stack-pool span {
+    /* font-family: Plus Jakarta Sans; */
+
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 36px;
+    letter-spacing: 0em;
+    text-align: left;
+    background: linear-gradient(93.52deg, #8CEAFF 6.52%, #D9EDFF 114.49%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding-left: 10px;
+}
+
+.generate-stable {
+    /* font-family: Plus Jakarta Sans; */
+    color: #fff;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: center;
+    width: 33%;
+    margin: auto;
+    padding: 30px 0px;
+    opacity: 70%;
+}
+
+
+
+.your-sei {
+    /* font-family: Plus Jakarta Sans; */
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 16px;
+    letter-spacing: 0em;
+    text-align: left;
+    background: #00000069;
+    border-radius: 15px;
+    padding: 18px;
+    border-top: 2px solid #FFFFFF
+}
+
+.your-sei span {
+    font-weight: 300;
+    opacity: 75%;
+}
+
+.your-collection {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: 0em;
+    text-align: left;
+
+}
+
+.total-collect {
+    color: #fff;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+    opacity: 50%;
+
+}
+
+.stake-all {
+    color: #0075FF !important;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 18px;
+    letter-spacing: 0em;
+    text-align: center;
+    cursor: pointer;
+
+}
+
+.you-collect-whole-div {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 10px;
+}
+
+.collection-card-main2 {
+    background: #00000069;
+    /* padding: 20px; */
+    border-radius: 15px;
+    margin-top: 20px;
+}
+
+.collection-card-main {
+    background: #00000069;
+    padding: 0px 20px;
+    border-radius: 15px;
+    margin-top: 20px;
+}
+
+.card-txt-yc,
+.yc-num {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+
+}
+
+.card-main {
+    background: transparent !important;
+}
+
+.card-action {
+    justify-content: center;
+}
+
+.card-action button,
+.card-action button:hover {
+    background: #0075FF;
+    color: #fff;
+    /* font-family: Plus Jakarta Sans; */
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 18px;
+    letter-spacing: 0em;
+    text-align: center;
+    padding: 5px 35px;
+}
+
+.card-cont-yc {
+    height: 280px;
+    overflow-y: scroll;
+}
+
+.totao-stacked {
+    /* font-family: Plus Jakarta Sans; */
+    color: #fff;
+    opacity: 50%;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 14px;
+    letter-spacing: 0em;
+    text-align: left;
+    margin: 6px 0px;
+
+}
+
+.stacked-astro {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 25px;
+    letter-spacing: 0em;
+    text-align: left;
+
+}
+
+.total-stacked-main {
+    background-color: #0000007a;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 15px 0px;
+}
+
+.stack-days {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 12px;
+    letter-spacing: 0em;
+    text-align: left;
+
+}
+
+.total-stacked-main2.display {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #0000007a;
+    padding: 6px 11px;
+    border-radius: 10px;
+    margin: 15px 0px;
+}
+
+.stack-duration {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 14px;
+    letter-spacing: 0em;
+    text-align: left;
+    padding: 6px 11px;
+
+}
+
+.stacked-col-img img {
+    width: 27px;
+    height: 27px;
+}
+
+.col-astro {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+
+}
+
+.unstake-col {
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 18px;
+    letter-spacing: 0em;
+    text-align: center;
+    opacity: 50%;
+    cursor: pointer;
+
+}
+
+.unstake-col:hover {
+    color: #0075FF;
+}
+
+.stac-col-img-txt {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.stacked-main-col {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 15px;
+    background-color: #0000007a;
+    border-radius: 10px;
+    align-items: center;
+    margin: 10px 0px;
+}
+
+.stacker-mar {
+    margin-top: 20px;
+    height: 150px;
+    overflow-y: scroll;
+}
+
+.claim-your button {
+    /* font-family: Plus Jakarta Sans; */
+    color: #fff;
+    text-transform: inherit;
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 18px;
+    letter-spacing: 0em;
+    text-align: center;
+    background: #0075FF;
+    padding: 9px 15px;
+
+}
+
+.input-claim {
+    display: flex;
+    gap: 15px;
+    padding: 5px 0px 20px 0px;
+    align-items: center;
+    justify-content: center;
+    /* overflow-x: scroll; */
+    flex-flow: wrap;
+}
+
+.stake-input input {
+    padding: 10px;
+    border-radius: 7px;
+    color: #9AF561 !important;
+    border: unset !important;
+    background: #0000008c;
+    /* font-family: Plus Jakarta Sans; */
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 14px;
+    letter-spacing: 4px;
+    text-align: center;
+}
+
+
+.stake-input input::placeholder {
+    color: #9AF561;
+    /* font-family: Plus Jakarta Sans; */
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 14px;
+    letter-spacing: 4px;
+    text-align: center;
+}
+
+.buy-pallet-main-div {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    justify-content: space-between;
+    padding: 20px 0px;
+}
+
+.became-astro {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 25px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+.start-earning {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 14px;
+    letter-spacing: 0em;
+    text-align: left;
+    opacity: 50%;
+}
+
+
+.buy-pallet-btn button {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: left;
+    padding: 20px 40px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    text-transform: capitalize;
+    background: linear-gradient(126.97deg, #0554B6 28.26%, rgba(10, 14, 35, 0.71) 91.2%);
+
+}
+
+.buy-pallet-btn button .sub-btn-pallet {
+    color: #fff;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 12px;
+    letter-spacing: 0em;
+    text-align: left;
+    opacity: 50%;
+    padding: 3px 0px;
+}
+
+.stack-img-buy-pallet {
+    width: 257px;
+    height: 66px;
+}
+
+.qa {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 25px;
+    letter-spacing: 0em;
+    text-align: left;
+    padding: 10px 0px;
+
+}
+
+.auestion-abt {
+    /* font-family: Plus Jakarta Sans; */
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 14px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #fff;
+    opacity: 50%;
+}
+
+.accord-div {
+    padding: 20px 10px;
+}
+
+.accord-stack {
+    background-color: #0000007a !important;
+    color: #fff !important;
+    margin: 15px 0px;
+    border-radius: 15px !important;
+}
+
+.accord-stack svg {
+    fill: #fff !important;
+}
+
+.stack-tab .Mui-selected {
+    color: #fff !important;
+    /* font-family: Plus Jakarta Sans; */
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 14px;
+    letter-spacing: 0em;
+    text-align: center;
+    text-transform: capitalize;
+    background: #000 !important;
+    opacity: 100% !important;
+}
+
+.stack-tab {
+    min-height: 0px !important;
+}
+
+.stack-tab .MuiTab-root {
+    color: #000;
+    /* font-family: Plus Jakarta Sans; */
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 14px;
+    letter-spacing: 0em;
+    text-align: center;
+    text-transform: capitalize !important;
+    opacity: 50%;
+    padding: 7px 30px;
+    min-height: fit-content;
+    min-width: 50%;
+}
+
+.stack-tab .MuiTabs-indicator {
+    display: none !important;
+}
+
+.stack-tab .MuiTabs-flexContainer {
+    background-color: #455CDD;
+    /* padding: 5px; */
+    border-radius: 15px 15px 0px 0px !important;
+}
+
+[aria-controls="simple-tabpanel-0"] {
+    border-radius: 15px 0px 0px 0px !important;
+}
+
+[aria-controls="simple-tabpanel-1"] {
+    border-radius: 0px 15px 0px 0px !important;
+}
+
+.stack-tab-main-div {
+    padding: 10px;
+}
+
+/* .stack-tab-card-whole-div {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+} */
+
+.available {
+    /* font-family: Plus Jakarta Sans; */
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 14px;
+    letter-spacing: 0em;
+    text-align: left;
+    padding: 10px 0px;
+    opacity: 50%;
+}
+
+.sei-count {
+    /* font-family: Plus Jakarta Sans; */
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 25px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+.sei-count span {
+    color: #64FA6A;
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 17px;
+    letter-spacing: 0em;
+    text-align: left;
+    padding-left: 10px;
+}
+
+.stack-tacb-c1 {
+    padding: 20px;
+    border-radius: 15px;
+    background: linear-gradient(126.97deg, #060C29 28.26%, rgba(4, 12, 48, 0.5) 91.2%);
+    display: flex;
+    gap: 30px;
+
+}
+
+.stack-tacb-c2 {
+    padding: 20px;
+    border-radius: 15px;
+    background: linear-gradient(126.97deg, #060C29 28.26%, rgba(4, 12, 48, 0.5) 91.2%);
+    margin:15px 0px;
+}
+
+.earnings-main-div {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 25px;
+    margin: 30px 0px;
+    border-radius: 10px;
+    background: linear-gradient(126.97deg, #060C29 28.26%, rgba(4, 12, 48, 0.5) 91.2%);
+    /* font-family: Plus Jakarta Sans; */
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 14px;
+    letter-spacing: 0em;
+    text-align: center;
+    color: #fff;
+
+}
+
+.stack-tab-earnings {
+    /* font-family: Plus Jakarta Sans; */
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700 !important;
+    line-height: 14px;
+    letter-spacing: 0em;
+    text-align: left;
+
+}
+
+.yourstack {
+    /* font-family: Plus Jakarta Sans; */
+    color: #fff;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: left;
+    margin: 20px 0px;
+
+}
+
+.stake-input2 {
+    width: 100%;
+    text-align: left;
+    border-radius: 15px;
+    /* padding: 10px; */
+}
+
+.stake-input2 input {
+    color: #fff !important;
+}
+
+.stake-input2 .MuiFormControl-root.MuiTextField-root {
+    width: 100%;
+    border: 2px solid #ffffff63;
+    border-radius: 10px;
+
+}
+
+.connect-compas {
+    /* font-family: Plus Jakarta Sans; */
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 14px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #A0AEC0;
+}
+
+.stake-input2 fieldset {
+    border-color: transparent !important;
+    border-width: unset !important;
+}
+
+.stack-tab-btn {
+    background: #0075FF !important;
+    color: #fff !important;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 21px;
+    letter-spacing: 0em;
+    text-align: center;
+    text-transform: capitalize !important;
+    opacity: 60%;
+    width: 100%;
+    margin: 20px 0px !important;
+    border-radius: 12px !important;
+}
+
+.stack-tab-footer-main,
+.foot-inner-div {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    align-items: center;
+    margin: 10px 0px;
+    width: 100%;
+}
+
+.foot-tab-inner-cont {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+
+}
+
+.stck-seq {
+    /* font-family: Plus Jakarta Sans; */
+    color: #A0AEC0;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 14px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+.stack-status-foot {
+    color: #A0AEC0;
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 12px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+.foot-tab-inner-cont img {
+    width: auto;
+    height: auto;
+}
+
+.cpy-name,
+.follow-astro {
+    /* font-family: Plus Jakarta Sans; */
+    color: #fff !important;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 21px;
+    letter-spacing: 0em;
+    text-align: left;
+    justify-content: flex-end;
+    padding: 0px 15px;
+}
+
+.pop-wallet-head {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 16px;
+    letter-spacing: 0em;
+    text-align: left;
+    background: #00000069;
+    border-radius: 15px;
+    padding: 18px;
+    border-top: 2px solid #FFFFFF;
+
+}
+
+.pop-wallet-name {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 16px;
+    letter-spacing: 0em;
+    text-align: center;
+    /* / background: #00000069; / */
+    border-radius: 15px;
+    padding: 10px 0px;
+    /* / border-top: 2px solid #FFFFFF; / */
+
+}
+
+.pop-close svg {
+    fill: #fff;
+    cursor: pointer;
+    font-size: 30px;
+}
+
+.wallet-logo img {
+    width: 70px;
+    height: 70px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.wallet-logo {
+    display: flex;
+    gap: 20px;
+    justify-content: space-evenly;
+    margin: 20px 0px;
+}
+
+.pop-close {
+    position: absolute;
+    right: -8px;
+    top: -5px;
+}
+
+.wallet-wrap {
+    cursor: pointer;
+}
+
+.stktable th,
+td,
+tr {
+    color: #fff !important;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: 0em;
+    text-align: center !important;
+    border-bottom: unset !important;
+}
+
+.stktable button,
+.stktable:hover button {
+    background: #0075FF;
+    color: #fff !important;
+    /* font-family: Plus Jakarta Sans; */
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 18px;
+    letter-spacing: 0em;
+    text-align: center;
+    padding: 5px 15px;
+}
+
+.circle {
+    color: #fff !important;
+    width: 20px !important;
+    height: 20px !important;
+
+}
+
+.circle-btn {
+    padding: 5px 40px !important;
+}
+
+.succes-btn {
+    background: green !important;
+}
+
