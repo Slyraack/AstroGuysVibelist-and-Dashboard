@@ -122,7 +122,10 @@ function SideBar(props) {
                 let addres = accounts[0].address
                 // const client = await StargateClient.connect("https://rpc.atlantic-2.seinetwork.io");
                 const balances = await client.getAllBalances(addres);
-                let newbal = (parseFloat(Number(balances[0].amount) / (10 ** 6)).toFixed(2))
+                
+                let newbal = balances.length > 0 ? (
+                  parseFloat(Number(balances[0].amount) / 10 ** 6).toFixed(2)
+                ) : 0;
 
                 window.localStorage.setItem("address", accounts[0].address)
                 let add = accounts[0].address.slice(0, 6) + "......" + accounts[0].address.slice(36, 42)
@@ -228,7 +231,7 @@ function SideBar(props) {
             <List className="navlink-list">
                 <NavLink to='/' className={({ isActive }) => (isActive ? 'active' : 'non-active')} ><CottageIcon className="svg-icon" /> Dashboard</NavLink>
                 <NavLink to='/' className={({ isActive }) => (isActive ? 'active' : 'non-active')} ><PortraitIcon className="svg-icon" /> Portfolio</NavLink>
-                <NavLink to='/' className={({ isActive }) => (isActive ? 'active' : 'non-active')} ><SignalCellularAltIcon className="svg-icon" /> Vibelist</NavLink>
+                <NavLink to='/vibelist' className={({ isActive }) => (isActive ? 'active' : 'non-active')} ><SignalCellularAltIcon className="svg-icon" /> Vibelist</NavLink>
                 <NavLink to='/' className={({ isActive }) => (isActive ? 'active' : 'non-active')} ><FaBridgeWater className="svg-icon" /> Bridge</NavLink>
                 <NavLink to='/' className={({ isActive }) => (isActive ? 'active' : 'non-active')} ><LayersIcon className="svg-icon" /> Staking</NavLink>
                 <NavLink to='/' className={({ isActive }) => (isActive ? 'active' : 'non-active')} ><LayersIcon className="svg-icon" /> WL Market</NavLink>
