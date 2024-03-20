@@ -186,7 +186,7 @@
     opacity: 75%;
 }
 
-.your-collection {
+.your-collection,.data-no {
     color: #fff;
     font-size: 16px;
     font-weight: 500;
@@ -195,7 +195,10 @@
     text-align: left;
 
 }
-
+.data-no{
+    text-align: center;
+    width: 100%;
+}
 .total-collect {
     color: #fff;
     font-size: 12px;
@@ -221,7 +224,7 @@
 .you-collect-whole-div {
     display: flex;
     justify-content: space-between;
-    padding: 5px 10px;
+    padding: 15px !important;
 }
 
 .collection-card-main2 {
@@ -274,6 +277,8 @@
     height: 280px;
     overflow-y: scroll;
 }
+
+
 
 .totao-stacked {
     /* font-family: Plus Jakarta Sans; */

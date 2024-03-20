@@ -23,13 +23,7 @@ import { Button } from "@mui/material";
 import { BiWalletAlt } from "react-icons/bi";
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import WEb3, { Web3 } from "web3";
-// import { useQueryClient } from "@sei-js/react";
-// import { SeiWalletProvider } from '@sei-js/react';
-// import { Tendermint34Client } from '@cosmjs/tendermint-rpc';
-// import { QueryClient, setupBankExtension } from "@cosmjs/stargate";
 import { StargateClient } from "@cosmjs/stargate";
-// import WalletConnectProvider from '@walletconnect/web3-provider';
-// import { COMPASS_WALLET, FIN_WALLET, KEPLR_WALLET } from "@sei-js/core";
 import LogoutIcon from '@mui/icons-material/Logout';
 import Axios from "../axios";
 import Modal from '@mui/material/Modal';
@@ -75,7 +69,7 @@ function SideBar(props) {
         window.open("https://chromewebstore.google.com/detail/leap-cosmos-wallet/fcfcfllfndlomdhbehjjcoimbgofdncg");
     }
 
-    // const { window } = props;
+
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const [isClosing, setIsClosing] = React.useState(false);
 
@@ -97,7 +91,7 @@ function SideBar(props) {
 
     const [metamaskadd, setMetamaskadd] = useState(null);
     const [wallet, setWallet] = useState("");
-    // const { queryClient } = new QueryClient();
+
     useEffect(() => {
         if (window.localStorage.getItem("address") != null) {
             const accounts = window.localStorage.getItem("address")
@@ -119,33 +113,29 @@ function SideBar(props) {
             const rpcEndpoint = "https://sei-rpc.brocha.in"; // e.g., "http://localhost:26657"
             const client = await StargateClient.connect(rpcEndpoint);
             try {
-                // console.log(queryClient, "compass");
+
                 /* MetaMask is installed */
                 await window.compass.enable("pacific-1");
                 const offlineSigner = window.compass.getOfflineSigner("pacific-1");
                 const accounts = await offlineSigner.getAccounts();
                 let addres = accounts[0].address
-                // const client = await StargateClient.connect("https://rpc.atlantic-2.seinetwork.io");
+
                 const balances = await client.getAllBalances(addres);
-                // let newbal = (parseFloat(Number(balances[0].amount) / (10 ** 6)).toFixed(2))
+
 
                 window.localStorage.setItem("address", accounts[0].address)
                 let add = accounts[0].address.slice(0, 6) + "......" + accounts[0].address.slice(36, 42)
                 setWallet(add)
 
-                const response = await Axios.post('/api/users/register', { address: addres })
-                // console.log(response, 'res');
+                const response = await Axios.post('/users/register', { address: addres }, {
+                    headers: { Authorization: window.localStorage.getItem('token') }
+                })
+
                 if (response.data.success == true) {
                     const token = response.data.result.token
-                    // console.log(token, 'token');
                     window.localStorage.setItem('token', token)
                     toast.success(response.data.message)
-                    // window.location.reload()
-                    // console.log('success', response.message);
                 }
-                // console.log("Connected address:", accounts[0].address);
-                // const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-
             } catch (err) {
                 console.error(err.message);
             }
@@ -154,34 +144,35 @@ function SideBar(props) {
 
             const rpcEndpoint = "https://sei-rpc.brocha.in";  // e.g., "http://localhost:26657"
             const client = await StargateClient.connect(rpcEndpoint);
-            console.log(client, 'client');
+           
             try {
-                // console.log(queryClient, "compass");
+        
                 /* MetaMask is installed */
                 await window.leap.enable("pacific-1");
                 const offlineSigner = window.leap.getOfflineSigner("pacific-1");
                 const accounts = await offlineSigner.getAccounts();
-                // console.log(accounts, 'accounts');
+               
 
                 let addres = accounts[0].address
 
                 const balances = await client.getAllBalances(addres);
 
-                // let newbal = (parseFloat(Number(balances[0].amount) / (10 ** 6)).toFixed(2))
-
+               
                 window.localStorage.setItem("leapaddress", accounts[0].address)
                 let add = accounts[0].address.slice(0, 6) + "......" + accounts[0].address.slice(36, 42)
                 setWallet(add)
 
-                const response = await Axios.post('/api/users/register', { address: addres })
-                // console.log(response, 'res');
+                const response = await Axios.post('/users/register', { address: addres }, {
+                    headers: { Authorization: window.localStorage.getItem('token') }
+                })
+               
                 if (response.data.success == true) {
                     const token = response.data.result.token
-                    // console.log(token, 'token');
+                   
                     window.localStorage.setItem('token', token)
-                    // window.location.reload()
+                    
                     toast.success(response.data.message)
-                    // console.log('success', response.message);
+                    
                 }
 
             } catch (err) {
@@ -191,31 +182,19 @@ function SideBar(props) {
         else {
             /* MetaMask is not installed */
             setOpen(true)
-            // window.open("https://chromewebstore.google.com/detail/compass-wallet-for-sei/anokgmphncpekkhclmingpimjmcooifb")
+           
 
         }
     }
-   
 
-    // console.log(openmodal,'openmodal');
-
-    // console.log(wallet, 'wallet');
-
-    // const balanceQuery = useRichBalance(
-    //     "cosmos1euj9dfs6w8z7499szczca9w4k242np63gntdnm",
-    //     "cosmoshub-4",
-    // );
-    // console.log(balanceQuery, 'bal');
 
     const logout = () => {
         const accounts = window.localStorage.getItem("address")
         if (accounts) {
-            // window.localStorage.removeItem("address")
             window.localStorage.clear()
             setWallet("")
         }
         else {
-            // window.localStorage.removeItem("leapaddress")
             window.localStorage.clear()
             setWallet("")
         }
@@ -223,7 +202,6 @@ function SideBar(props) {
 
     const drawer = (
         <div className="sidebar-list">
-            {/* <Toolbar /> */}
             <Divider />
             <div className="sidebar-backarrow">
                 <ArrowForwardIosIcon sx={{ display: { lg: 'none', sm: 'block' } }} onClick={handleDrawerClose} />
@@ -292,7 +270,6 @@ function SideBar(props) {
                     aria-label="mailbox folders"
                     className="list"
                 >
-                    {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
                     <AppBar
                         position="fixed"
                         sx={{
@@ -315,7 +292,6 @@ function SideBar(props) {
 
                             <div className="head-text-sidebar">
                                 <div className="user-name">
-                                    <strong>GM</strong>, <span>Astro Zoski</span>
                                 </div>
                                 {wallet === "" ?
                                     <Button className="connet-wallet" onClick={connectwallet}>
@@ -329,7 +305,6 @@ function SideBar(props) {
 
                     </AppBar>
                     <Drawer
-                        // container={container}
                         variant="temporary"
                         open={mobileOpen}
                         onTransitionEnd={handleDrawerTransitionEnd}
@@ -358,8 +333,6 @@ function SideBar(props) {
                     </Drawer>
                 </Box>
 
-                {/* <Button onClick={handleOpen}>Open modal</Button> */}
-                {/* {openmodal ? ( */}
                 <Modal
                     open={open}
 
@@ -392,7 +365,6 @@ function SideBar(props) {
 
                     </Box>
                 </Modal>
-                {/* // ) : (<></>)} */}
             </Box>
         </div >
 
