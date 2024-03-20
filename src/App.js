@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SideBar from './Components/Sidebar/SideBar';
 import Stacking from './Components/Stacking/Stacking';
 import Market from './Components/Market/Market';
-import VibeList from './Components/Vibelist/Vibelist';
 
 
 function App() {
@@ -15,7 +14,6 @@ function App() {
           <Route exact path="/sidebar" element={<SideBar />} />
           <Route exact path="/" element={<Stacking />} />
           <Route exact path="/market" element={<Market />} />
-          <Route exact path="/vibelist" element={<VibeList />} />
         </Routes>
       </Router>
     </div>

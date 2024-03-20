@@ -36,6 +36,10 @@ import Modal from '@mui/material/Modal';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import leap from "../../Img/leap.png"
 import compass from "../../Img/compass.png"
+import { toast } from "react-toastify";
+import { Token } from "@mui/icons-material";
+
+
 
 const drawerWidth = 240;
 
@@ -74,6 +78,7 @@ function SideBar(props) {
     // const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const [isClosing, setIsClosing] = React.useState(false);
+
 
     const handleDrawerClose = () => {
         setIsClosing(true);
@@ -122,23 +127,21 @@ function SideBar(props) {
                 let addres = accounts[0].address
                 // const client = await StargateClient.connect("https://rpc.atlantic-2.seinetwork.io");
                 const balances = await client.getAllBalances(addres);
-                
-                let newbal = balances.length > 0 ? (
-                  parseFloat(Number(balances[0].amount) / 10 ** 6).toFixed(2)
-                ) : 0;
+                // let newbal = (parseFloat(Number(balances[0].amount) / (10 ** 6)).toFixed(2))
 
                 window.localStorage.setItem("address", accounts[0].address)
                 let add = accounts[0].address.slice(0, 6) + "......" + accounts[0].address.slice(36, 42)
                 setWallet(add)
 
-                const response = await Axios.post('/users/register', { address: addres })
-                console.log(response, 'res');
+                const response = await Axios.post('/api/users/register', { address: addres })
+                // console.log(response, 'res');
                 if (response.data.success == true) {
                     const token = response.data.result.token
-                    console.log(token, 'token');
+                    // console.log(token, 'token');
                     window.localStorage.setItem('token', token)
-                    window.location.reload()
-                    console.log('success', response.message);
+                    toast.success(response.data.message)
+                    // window.location.reload()
+                    // console.log('success', response.message);
                 }
                 // console.log("Connected address:", accounts[0].address);
                 // const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
@@ -148,34 +151,37 @@ function SideBar(props) {
             }
         }
         else if (window.leap) {
+
             const rpcEndpoint = "https://sei-rpc.brocha.in";  // e.g., "http://localhost:26657"
             const client = await StargateClient.connect(rpcEndpoint);
+            console.log(client, 'client');
             try {
                 // console.log(queryClient, "compass");
                 /* MetaMask is installed */
                 await window.leap.enable("pacific-1");
                 const offlineSigner = window.leap.getOfflineSigner("pacific-1");
                 const accounts = await offlineSigner.getAccounts();
-                console.log(accounts, 'accounts');
+                // console.log(accounts, 'accounts');
 
                 let addres = accounts[0].address
-                console.log(addres, 'addr');
 
                 const balances = await client.getAllBalances(addres);
+
                 // let newbal = (parseFloat(Number(balances[0].amount) / (10 ** 6)).toFixed(2))
 
                 window.localStorage.setItem("leapaddress", accounts[0].address)
                 let add = accounts[0].address.slice(0, 6) + "......" + accounts[0].address.slice(36, 42)
                 setWallet(add)
 
-                const response = await Axios.post('/users/register', { address: addres })
-                console.log(response, 'res');
+                const response = await Axios.post('/api/users/register', { address: addres })
+                // console.log(response, 'res');
                 if (response.data.success == true) {
                     const token = response.data.result.token
-                    console.log(token, 'token');
+                    // console.log(token, 'token');
                     window.localStorage.setItem('token', token)
-                    window.location.reload()
-                    console.log('success', response.message);
+                    // window.location.reload()
+                    toast.success(response.data.message)
+                    // console.log('success', response.message);
                 }
 
             } catch (err) {
@@ -189,6 +195,7 @@ function SideBar(props) {
 
         }
     }
+   
 
     // console.log(openmodal,'openmodal');
 
@@ -231,7 +238,7 @@ function SideBar(props) {
             <List className="navlink-list">
                 <NavLink to='/' className={({ isActive }) => (isActive ? 'active' : 'non-active')} ><CottageIcon className="svg-icon" /> Dashboard</NavLink>
                 <NavLink to='/' className={({ isActive }) => (isActive ? 'active' : 'non-active')} ><PortraitIcon className="svg-icon" /> Portfolio</NavLink>
-                <NavLink to='/vibelist' className={({ isActive }) => (isActive ? 'active' : 'non-active')} ><SignalCellularAltIcon className="svg-icon" /> Vibelist</NavLink>
+                <NavLink to='/' className={({ isActive }) => (isActive ? 'active' : 'non-active')} ><SignalCellularAltIcon className="svg-icon" /> Vibelist</NavLink>
                 <NavLink to='/' className={({ isActive }) => (isActive ? 'active' : 'non-active')} ><FaBridgeWater className="svg-icon" /> Bridge</NavLink>
                 <NavLink to='/' className={({ isActive }) => (isActive ? 'active' : 'non-active')} ><LayersIcon className="svg-icon" /> Staking</NavLink>
                 <NavLink to='/' className={({ isActive }) => (isActive ? 'active' : 'non-active')} ><LayersIcon className="svg-icon" /> WL Market</NavLink>
