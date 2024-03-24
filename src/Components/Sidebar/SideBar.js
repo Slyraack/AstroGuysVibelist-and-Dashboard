@@ -216,7 +216,7 @@ function SideBar(props) {
             <List className="navlink-list">
                 <NavLink to='/' className={({ isActive }) => (isActive ? 'active' : 'non-active')} ><CottageIcon className="svg-icon" /> Dashboard</NavLink>
                 <NavLink to='/' className={({ isActive }) => (isActive ? 'active' : 'non-active')} ><PortraitIcon className="svg-icon" /> Portfolio</NavLink>
-                <NavLink to='/' className={({ isActive }) => (isActive ? 'active' : 'non-active')} ><SignalCellularAltIcon className="svg-icon" /> Vibelist</NavLink>
+                <NavLink to='/vibelist' className={({ isActive }) => (isActive ? 'active' : 'non-active')} ><SignalCellularAltIcon className="svg-icon" /> Vibelist</NavLink>
                 <NavLink to='/' className={({ isActive }) => (isActive ? 'active' : 'non-active')} ><FaBridgeWater className="svg-icon" /> Bridge</NavLink>
                 <NavLink to='/' className={({ isActive }) => (isActive ? 'active' : 'non-active')} ><LayersIcon className="svg-icon" /> Staking</NavLink>
                 <NavLink to='/' className={({ isActive }) => (isActive ? 'active' : 'non-active')} ><LayersIcon className="svg-icon" /> WL Market</NavLink>
