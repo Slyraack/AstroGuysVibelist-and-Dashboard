@@ -1,0 +1,272 @@
+.st-c1 {
+  background-image: url("../../Img/st-c1.png");
+  background-position: inherit;
+  object-fit: cover;
+  width: 100%;
+  /* height: 247px; */
+  background-repeat: no-repeat;
+  border-radius: 15px;
+  background-size: cover;
+}
+
+.vibe-col-0 {
+  width: 5%;
+}
+
+.vibe-col-1 {
+  width: 25%;
+  text-align: left !important;
+}
+
+.vibe-col-2 {
+  width: 15%;
+  text-align: left !important;
+}
+
+.vibe-col-3 {
+  width: 5%;
+  text-align: left !important;
+}
+
+.vibe-col-4 {
+  width: 5%;
+  text-align: left !important;
+}
+
+.vibe-col-5 {
+  width: 5%;
+  text-align: left !important;
+}
+
+.vibe-col-6 {
+  width: 10%;
+  text-align: left !important;
+}
+
+.vibe-col-7 {
+  width: 15%;
+  text-align: center !important;
+}
+
+.vibe-row {
+  height: 80px;
+}
+
+.vibe-row:not(:nth-of-type(odd)) > td {
+  background: #00000069;
+}
+
+.vibe-row:not(:nth-of-type(odd)) > td:first-of-type {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.vibe-row:not(:nth-of-type(odd)) > td:last-of-type {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.btn-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #00000069;
+  border-radius: 10px;
+  margin-left: 15px;
+  padding: 0px 10px;
+}
+
+.btn-group .active {
+  color: #fff;
+}
+
+.docs button {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
+  padding: 10px 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  text-transform: capitalize;
+  background: linear-gradient(
+    126.97deg,
+    #0554b6 28.26%,
+    rgba(10, 14, 35, 0.71) 91.2%
+  );
+}
+
+.vibelisted-title {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
+  padding: 10px 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  text-transform: capitalize;
+  background: rgba(0, 117, 255, 1);
+  width: fit-content;
+  box-shadow: 0px 3.500000238418579px 5.500000476837158px 0px
+    rgba(0, 0, 0, 0.02);
+}
+
+.vibe-detail-name {
+  flex-grow: 1;
+}
+
+.get-vibelisted a {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
+  padding: 10px 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  text-transform: capitalize;
+  background: none;
+  border: 1px solid #fff;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-plus-icon {
+  background-color: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-plus-icon span {
+  margin-top: -3px;
+}
+
+.read-vibelisted {
+  color: #8ceaff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.vibelist-stats {
+  height: 50px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.vibelist-stats-card {
+  height: 210px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.vibe-card {
+  height: 50px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.vibelist-table-title {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.tco-vibe-project {
+  flex: auto;
+}
+
+@media only screen and (max-width: 1240px) {
+.vibelist-table-title {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: start;
+    gap: 10px;
+  }
+}
+
+@media only screen and (max-width: 980px) {
+  .vibe-col-3 {
+    display: none;
+  }
+
+  .vibe-col-4 {
+    display: none;
+  }
+
+  .vibe-col-5 {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 530px) {
+  .vibe-col-6 {
+    display: none;
+  }
+
+  th.vibe-col-2 {
+    display: none;
+  
+  }
+
+  .vibelist-table-title > div {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 380px) {
+  .vibelist-stats {
+    flex-direction: column;
+    height: fit-content;
+    align-items: start;
+  }
+
+  .vibelist-stats-card {
+    height: fit-content;
+  }
+
+  .vibelist-stats > div {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+  }
+
+  .vibe-card {
+    flex-direction: column;
+    height: fit-content;
+    margin-bottom: 8px;
+  }
+
+  
+}
