@@ -2,7 +2,7 @@ import axios from 'axios';
 import constant from './constants'
 
 const token = localStorage.getItem('token')
-console.log('axios token',token);
+// console.log('axios token',token);
 const Axios = axios.create({
     baseURL: constant.BackendUrl,
     headers: {

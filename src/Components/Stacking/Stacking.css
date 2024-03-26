@@ -186,7 +186,8 @@
     opacity: 75%;
 }
 
-.your-collection,.data-no {
+.your-collection,
+.data-no {
     color: #fff;
     font-size: 16px;
     font-weight: 500;
@@ -195,10 +196,12 @@
     text-align: left;
 
 }
-.data-no{
+
+.data-no {
     text-align: center;
     width: 100%;
 }
+
 .total-collect {
     color: #fff;
     font-size: 12px;
@@ -251,6 +254,7 @@
     text-align: left;
 
 }
+
 
 .card-main {
     background: transparent !important;
@@ -647,7 +651,7 @@
     padding: 20px;
     border-radius: 15px;
     background: linear-gradient(126.97deg, #060C29 28.26%, rgba(4, 12, 48, 0.5) 91.2%);
-    margin:15px 0px;
+    margin: 15px 0px;
 }
 
 .earnings-main-div {
@@ -694,6 +698,7 @@
     width: 100%;
     text-align: left;
     border-radius: 15px;
+   
     /* padding: 10px; */
 }
 
@@ -890,3 +895,65 @@ tr {
     background: green !important;
 }
 
+.soon-img {
+    text-align: center;
+    height: 88vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.soon-img img {
+    width: 170px;
+    height: 130px;
+}
+
+.stack-pool.soon span {
+    font-size: 70px;
+    line-height: 100px;
+
+}
+
+.stack-pool.soon {
+    margin-top: 0px;
+}
+
+.form-controls {
+    padding: 10px;
+    margin-top: 15px;
+}
+
+.form-controls .MuiInputBase-root {
+    border-bottom: 1px solid #ccc;
+}
+
+
+.form-controls::placeholder {
+    color: #ccc;
+}
+
+.form-controls p,
+.form-controls input {
+    color: #ccc;
+}
+
+.stktable.model {
+    text-align: center;
+    padding: 15px;
+}
+
+.MuiInputBase-formControl.stake-input2 {
+    border: 2px solid #ffffff63;
+    border-radius: 10px;
+    color: #fff;
+}
+
+.MuiInputBase-formControl.stake-input2 svg {
+    color: #fff;
+}
+
+p.connect-compas {
+    display: flex;
+    justify-content: space-between;
+}

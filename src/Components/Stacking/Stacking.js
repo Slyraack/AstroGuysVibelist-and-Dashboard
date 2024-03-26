@@ -11,6 +11,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
+import Loader from '../../Img/loader.gif'
 import c1 from "../../Img/yc1.png"
 import c2 from "../../Img/yc2.png"
 import c3 from "../../Img/yc3.png"
@@ -48,10 +49,25 @@ import { DistributionExtension, setupDistributionExtension } from '@cosmjs/starg
 import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate'
 import axios from "axios";
 import { GasPrice } from '@cosmjs/stargate'
-
+import Backdrop from '@mui/material/Backdrop';
+// import CircularProgress from '@mui/material/CircularProgress';
+import load from "../../Img/loader2.gif"
+import Modal from '@mui/material/Modal';
+import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
+import leap from "../../Img/leap.png"
+import compass from "../../Img/compass.png"
+import InputLabel from '@mui/material/InputLabel';
+import Input from '@mui/material/Input';
+import FormControl from '@mui/material/FormControl';
+import MenuItem from '@mui/material/MenuItem';
+import FormHelperText from '@mui/material/FormHelperText';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { LineStyle } from '@mui/icons-material';
+import { Link } from "react-router-dom";
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
+
 
     return (
         <div
@@ -83,6 +99,21 @@ function a11yProps(index) {
     };
 }
 
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    '@media(max-width:575px)': {
+        width: '90%'
+    },
+    bgcolor: '#0a193a',
+    border: '2px solid #0a193a',
+    boxShadow: 24,
+    p: 4,
+    borderRadius: '15px'
+};
 
 
 const ycollection = [
@@ -111,6 +142,20 @@ const drawerWidth = 240;
 
 function Stacking() {
     var ws
+
+    const [open, setOpen] = React.useState(false);
+    const [getvalidators, setGetvalidators] = useState([])
+    const [adminFee, setAdminFee] = useState()
+    const [adminAddr, setAdminAddr] = useState()
+    const [defaultValue, setDefaultValue] = useState('Select Any Validator');
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
     const stakeinput = useRef("");
     const [expanded, setExpanded] = useState(false);
     const [datatusd, setDatatusd] = useState("")
@@ -142,8 +187,12 @@ function Stacking() {
     const [userTotalReward, setUserTotalReward] = useState(0)
     const [rew, setRew] = useState("")
     const [share, setShare] = useState("")
+    const [totse, setTotse] = useState("")
+    const [validatorAddress, setValidatorAddress] = useState()
+    const [stakeValidatorAddress, setStakeValidatorAddress] = useState()
 
-
+    const token = window.localStorage.getItem('token')
+    // console.log(token, 'tokenn');
 
     const handleChangetab = (event, newValue) => {
         setValues(newValue);
@@ -153,7 +202,36 @@ function Stacking() {
         setExpanded(isExpanded ? panel : false);
     };
 
+    const handleSelectChange = (e) => {
+        // console.log(e.target.value, 'event value');
+        // console.log(getvalidators, 'getvalidators');
+        const selectedMoniker = e.target.value
+        setDefaultValue(e.target.value)
+        const selectedValidator = getvalidators.find(validator => validator.moniker === selectedMoniker);
 
+        if (selectedValidator) {
+            console.log(selectedValidator.operatorAddress);
+            setValidatorAddress(selectedValidator.operatorAddress)
+        }
+    }
+    // console.log(validatorAddress, 'validatorAddress');
+
+    const handlePallet = async () => {
+        window.open('https://pallet.exchange/collection/astro-guys');
+    }
+
+    const [open2, setOpen2] = React.useState(false);
+    const [stakeAmount, setStakeAmount] = useState()
+    const [userId, setUserId] = useState()
+
+    const handleOpen2 = (amount, id, validatoraddress) => {
+        console.log(amount, 'amount', id, 'id');
+        setUserId(id)
+        setStakeAmount(amount)
+        setStakeValidatorAddress(validatoraddress)
+        setOpen2(true);
+    }
+    const handleClose2 = () => setOpen2(false);
 
     const apiCall = {
         "method": "SUBSCRIBE",
@@ -182,6 +260,19 @@ function Stacking() {
         };
     }
 
+    const getAdminAddr = async () => {
+        try {
+            const response = await Axios.post('/users/adminaddr')
+            if (response.data.success == true) {
+                setAdminAddr(response.data.result.walletaddr)
+            }
+        } catch (error) {
+            console.log(error, 'err in get admin addr');
+        }
+    }
+
+    // console.log(adminAddr, 'adminaddr');
+
     const SendNFT = async (tokenid) => {
         const compassAddr = window.localStorage.getItem("address")
         const leapAddr = window.localStorage.getItem("leapaddress")
@@ -189,83 +280,89 @@ function Stacking() {
         const Imgobj = tokenid
         const token = Imgobj.split(" ")
         const tokenId = token[2].replace("#", "")
-       
+
 
         try {
             if (compassAddr) {
-
+                setOpen(true)
                 // const addr = localStorage.getItem("address")
                 const contractAddress =
                     'sei1ezqkre4j3gkxlfhc23zv7w4nz8guwyczu70w650008dv3yscj2pqky7x7g';
                 const msg = {
                     "transfer_nft": {
-                        "recipient": "sei14tsl7y7n2fjrw3x4wdezff5cjtjyt9uj20nekw",
+                        // "recipient": "sei14tsl7y7n2fjrw3x4wdezff5cjtjyt9uj20nekw",
+                        "recipient": adminAddr,
                         "token_id": Number(tokenId).toString()
                     }
                 };
-             
+
                 const funds = [{
                     "denom": "usei",
                     "amount": "5000"
                 }];
 
-                const execute = async () => {
-                    const rpcEndpoint = "https://sei-rpc.brocha.in";
-                   
-                    const offlineSigner = window.compass.getOfflineSigner("pacific-1");
-                    
-                    const client = await SigningCosmWasmClient.connectWithSigner(rpcEndpoint, offlineSigner)
-                   
-                    const accounts = await offlineSigner.getAccounts();
+                // const execute = async () => {
+                const rpcEndpoint = "https://sei-rpc.brocha.in";
 
-                  
-                    const senderAddress = accounts[0].address;
-                
-                    // const senderAddress = "sei1tzm0eee98d5eyh2zpvvwnse88t9lr8l6h4end7";
-                    const fee = {
-                        amount: [{ denom: "usei", amount: "5000" }], // Example fee, adjust based on the network
-                        gas: "2000000", // Example gas limit, adjust based on the network sei1e8mfjzkrvdqugn9z29qwxzzc4vwm0vwxhgencd
-                    };
+                const offlineSigner = window.compass.getOfflineSigner("pacific-1");
 
-                    const tx = await client.execute(
-                        senderAddress,
-                        contractAddress,
-                        msg,
-                        fee,
-                        undefined,
-                        funds
-                    );
-                    const hash = tx.transactionHash
+                const client = await SigningCosmWasmClient.connectWithSigner(rpcEndpoint, offlineSigner)
 
-                    if (tx.transactionHash) {
-                        try {
-                            const response = await Axios.post('/users/nftStake', { senderAddress, hash, tx, tokenId },
-                                {
-                                    headers: {
-                                        Authorization: window.localStorage.getItem('token')
-                                    }
-                                })
-  
-                            if (response.data.success == true) {
-                                toast.success('NFT Stake Successfully Completed')
-                                await getImage()
-                                await GetNftStake()
-                            }
-                        } catch (error) {
-                            console.log(error, 'err');
+                const accounts = await offlineSigner.getAccounts();
+
+
+                const senderAddress = accounts[0].address;
+
+                // const senderAddress = "sei1tzm0eee98d5eyh2zpvvwnse88t9lr8l6h4end7";
+                const fee = {
+                    amount: [{ denom: "usei", amount: "5000" }], // Example fee, adjust based on the network
+                    gas: "200000", // Example gas limit, adjust based on the network sei1e8mfjzkrvdqugn9z29qwxzzc4vwm0vwxhgencd
+                };
+
+                const tx = await client.execute(
+                    senderAddress,
+                    contractAddress,
+                    msg,
+                    fee,
+                    undefined,
+                    funds
+                );
+                const hash = tx.transactionHash
+
+                if (tx.transactionHash) {
+                    try {
+                        const response = await Axios.post('/users/nftStake', { senderAddress, hash, tx, tokenId },
+                            {
+                                headers: {
+                                    Authorization: window.localStorage.getItem('token')
+                                }
+                            })
+
+                        if (response.data.success == true) {
+                            setOpen(false)
+                            toast.success('NFT Stake Successfully Completed')
+                            await getImage()
+                            await GetNftStake()
                         }
                     }
+                    catch (error) {
+                        setOpen(false)
+                        toast.error(error)
+                        console.log(error, 'err');
+                    }
+                }
 
-                };
-                execute();
+                // };
+                // execute();
             }
             else if (leapAddr) {
-
+                setOpen(true)
                 const contractAddress =
                     'sei1ezqkre4j3gkxlfhc23zv7w4nz8guwyczu70w650008dv3yscj2pqky7x7g';
                 const msg = {
                     "transfer_nft": {
-                        "recipient": "sei14tsl7y7n2fjrw3x4wdezff5cjtjyt9uj20nekw",
+                        // "recipient": "sei14tsl7y7n2fjrw3x4wdezff5cjtjyt9uj20nekw",
+                        "recipient": adminAddr,
                         "token_id": Number(tokenId).toString()
                     }
                 };
@@ -275,61 +372,68 @@ function Stacking() {
                     "amount": "5000"
                 }];
 
-                const execute = async () => {
-                    const rpcEndpoint = "https://sei-rpc.brocha.in";
+                // const execute = async () => {
+                const rpcEndpoint = "https://sei-rpc.brocha.in";
 
-                    const offlineSigner = window.leap.getOfflineSigner("pacific-1");
+                const offlineSigner = window.leap.getOfflineSigner("pacific-1");
 
-                    const client = await SigningCosmWasmClient.connectWithSigner(rpcEndpoint, offlineSigner)
-                  
-
-                    const accounts = await offlineSigner.getAccounts();
+                const client = await SigningCosmWasmClient.connectWithSigner(rpcEndpoint, offlineSigner)
 
 
-                    const senderAddress = accounts[0].address;
+                const accounts = await offlineSigner.getAccounts();
 
-                    // const senderAddress = "sei1tzm0eee98d5eyh2zpvvwnse88t9lr8l6h4end7";
-                    const fee = {
-                        amount: [{ denom: "usei", amount: "5000" }], // Example fee, adjust based on the network
-                        gas: "2000000", // Example gas limit, adjust based on the network sei1e8mfjzkrvdqugn9z29qwxzzc4vwm0vwxhgencd
-                    };
 
-                    const tx = await client.execute(
-                        senderAddress,
-                        contractAddress,
-                        msg,
-                        fee,
-                        undefined,
-                        funds
-                    );
-                    const hash = tx.transactionHash
+                const senderAddress = accounts[0].address;
 
-                    if (tx.transactionHash) {
-                        try {
-                            const response = await Axios.post('/users/nftStake', { senderAddress, hash, tx, tokenId },
-                                {
-                                    headers: {
-                                        Authorization: window.localStorage.getItem('token')
-                                    }
-                                })
-    
-                            if (response.data.success == true) {
-                                toast.success('NFT Stake Successfully Completed')
-                                await getImage()
-                                await GetNftStake()
-                            }
-                        } catch (error) {
-                            console.log(error, 'err');
+                // const senderAddress = "sei1tzm0eee98d5eyh2zpvvwnse88t9lr8l6h4end7";
+                const fee = {
+                    amount: [{ denom: "usei", amount: "5000" }], // Example fee, adjust based on the network
+                    gas: "200000", // Example gas limit, adjust based on the network sei1e8mfjzkrvdqugn9z29qwxzzc4vwm0vwxhgencd
+                };
+
+                const tx = await client.execute(
+                    senderAddress,
+                    contractAddress,
+                    msg,
+                    fee,
+                    undefined,
+                    funds
+                );
+                const hash = tx.transactionHash
+
+                if (tx.transactionHash) {
+                    try {
+                        const response = await Axios.post('/users/nftStake', { senderAddress, hash, tx, tokenId },
+                            {
+                                headers: {
+                                    Authorization: window.localStorage.getItem('token')
+                                }
+                            })
+
+                        if (response.data.success == true) {
+                            setOpen(false)
+                            toast.success('NFT Stake Successfully Completed')
+                            await getImage()
+                            await GetNftStake()
                         }
                     }
+                    catch (error) {
+                        setOpen(false)
+                        toast.error(error)
+                        console.log(error, 'err');
+                    }
+                }
 
-                };
-                execute();
+                // };
+                // execute();
             }
             else {
+                setOpen(false)
                 console.log('connect your wallet');
             }
         } catch (error) {
+            setOpen(false)
+            // toast.error(error)
             console.log('nft stake error', error);
         }
     }
@@ -343,6 +447,7 @@ function Stacking() {
 
 
     const getbalance = async () => {
+
         try {
             const accounts = window.localStorage.getItem("address")
             if (accounts) {
@@ -358,7 +463,7 @@ function Stacking() {
                 const client = await StargateClient.connect(rpcEndpoint);
                 const addres = window.localStorage.getItem("leapaddress")
                 const balances = await client.getAllBalances(addres);
-              
+
                 if (balances === undefined || balances.length === 0) {
                     setSeibal(0)
                 }
@@ -377,13 +482,14 @@ function Stacking() {
 
 
     useEffect(() => {
-        if ((seibal === "" && window.localStorage.getItem("address") != null)) {
+
+        if ((seibal === "" || window.localStorage.getItem("address") != null)) {
             getbalance()
         }
-        else if (seibal === "" && window.localStorage.getItem("leapaddress") != null) {
+        else if (seibal === "" || window.localStorage.getItem("leapaddress") != null) {
             getbalance()
         }
-    })
+    }, [token])
 
 
 
@@ -397,44 +503,53 @@ function Stacking() {
             setReward("0")
         }
     }
- 
+
 
     var RewardValue = ''
-   
+
     const getreward = async () => {
         try {
-           
+
             const compassAddr = window.localStorage.getItem("address")
             const leapAddr = window.localStorage.getItem("leapaddress")
             if (compassAddr) {
                 const client = await SigningStargateClient.connect("https://sei-rpc.brocha.in");
-                
+
                 const rewards1 = await client.queryClient.staking.delegation(compassAddr, "seivaloper1t9fq3qfm7ngau5gr8qgf5dpfzjqg79kf65cu04");
+
                 let sha = (Number(rewards1.delegationResponse.delegation.shares) / (10 ** 18))
                 setShare(sha)
-                
+
                 const rewards = await client.queryClient.staking.delegatorValidator(compassAddr, "seivaloper1t9fq3qfm7ngau5gr8qgf5dpfzjqg79kf65cu04");
-               
+
                 let newbal = (parseFloat(Number(rewards.validator.tokens) / (10 ** 18)).toFixed(4))
-                
+
                 setRew(newbal)
                 // RewardValue = newbal
                 return newbal
             }
             else {
                 const client = await SigningStargateClient.connect("https://sei-rpc.brocha.in");
-                
+                // console.log(client, 'client');
                 const rewards1 = await client.queryClient.staking.delegation(leapAddr, "seivaloper1t9fq3qfm7ngau5gr8qgf5dpfzjqg79kf65cu04");
+                // console.log(rewards1, 'rewards1');
+                // console.log(rewards1.delegationResponse.delegation.shares, 'sharess');
                 let sha = (Number(rewards1.delegationResponse.delegation.shares) / (10 ** 18))
-                setShare(sha)
-               
+                let amount = (Number(sha) / (10 ** 6))
+                // console.log(amount, 'amount');
+                // console.log(shareAmount, 'share amount');
+                // console.log(sha, 'sha');
+                setShare(amount)
+
                 const rewards = await client.queryClient.staking.delegatorValidator(leapAddr, "seivaloper1t9fq3qfm7ngau5gr8qgf5dpfzjqg79kf65cu04");
-              
+                // console.log(rewards, 'rewards');
                 let newbal = (parseFloat(Number(rewards.validator.tokens) / (10 ** 18)).toFixed(4))
-              
+
                 // RewardValue = newbal
                 setRew(newbal)
                 return newbal
+
+
             }
         } catch (error) {
             console.log(error, "error123");
@@ -443,16 +558,18 @@ function Stacking() {
 
 
 
-    const claimre = async () => {
+    const claimre = async (validatoraddress) => {
+        console.log('claimre validator address', validatorAddress);
         try {
             const compassAddr = window.localStorage.getItem("address")
             const leapAddr = window.localStorage.getItem("leapaddress")
             if (compassAddr) {
+                setOpen(true)
                 await window.compass.enable("pacific-1");
                 const offlineSigner = window.compass.getOfflineSigner("pacific-1");
                 const client = await SigningStargateClient.connectWithSigner("https://sei-rpc.brocha.in", offlineSigner);
                 let delegatorAddress = compassAddr
-                let validatorAddress = "seivaloper1t9fq3qfm7ngau5gr8qgf5dpfzjqg79kf65cu04"
+                let validatorAddress = validatoraddress
                 // Construct the message to claim rewards from the specific validator
                 const msgClaimRewards = {
                     typeUrl: "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward",
@@ -463,27 +580,29 @@ function Stacking() {
                 };
                 const fee = {
                     amount: [{ denom: "usei", amount: "5000" }], // Specify fee, adjust as needed
-                    gas: "2000000", // Specify gas limit, adjust as needed
+                    gas: "200000", // Specify gas limit, adjust as needed
                 };
 
-              
+
                 // Broadcast the transaction
                 // const rewardsResponse = await client.distribution.delegationTotalRewards(delegatorAddress);
                 const result = await client.signAndBroadcast(delegatorAddress, [msgClaimRewards], fee, "Claim rewards from Imperator.co");
                 if (result.code === 0) {
+                    setOpen(false)
                     toast.success("Reward Claimed successfully")
                 } else {
+                    setOpen(false)
                     toast.error("something Went Wrong")
                 }
-              
-
-            } else {
+            }
+            else {
+                setOpen(true)
                 await window.leap.enable("pacific-1");
                 const offlineSigner = window.leap.getOfflineSigner("pacific-1");
                 const client = await SigningStargateClient.connectWithSigner("https://sei-rpc.brocha.in", offlineSigner);
                 let delegatorAddress = leapAddr
-                let validatorAddress = "seivaloper1t9fq3qfm7ngau5gr8qgf5dpfzjqg79kf65cu04"
-           
+                let validatorAddress = validatoraddress
+
                 // Construct the message to claim rewards from the specific validator
                 const msgClaimRewards = {
                     typeUrl: "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward",
@@ -494,123 +613,164 @@ function Stacking() {
                 };
                 const fee = {
                     amount: [{ denom: "usei", amount: "5000" }], // Specify fee, adjust as needed
-                    gas: "2000000", // Specify gas limit, adjust as needed
+                    gas: "200000", // Specify gas limit, adjust as needed
                 };
 
-               
+
                 const result = await client.signAndBroadcast(delegatorAddress, [msgClaimRewards], fee, "Claim rewards from Imperator.co");
                 // Check if the transaction was successful
                 //   assertIsBroadcastTxSuccess(result);
 
-              
+
                 if (result.code === 0) {
+                    setOpen(false)
                     toast.success("Reward Claimed successfully")
                 } else {
+                    setOpen(false)
                     toast.error("something Went Wrong")
                 }
             }
 
         } catch (error) {
+            setOpen(false)
             console.log(error, "**error**");
         }
     }
 
-    const unstakre = async (da) => {
+    const unstakre = async (stakeAmount, userId) => {
+        // console.log(da, 'da');
         try {
             const compassAddr = window.localStorage.getItem("address")
             const leapAddr = window.localStorage.getItem("leapaddress")
             if (compassAddr) {
+                setOpen(true)
                 await window.compass.enable("pacific-1");
                 const offlineSigner = window.compass.getOfflineSigner("pacific-1");
-               
+
                 const client = await SigningStargateClient.connectWithSigner("https://sei-rpc.brocha.in", offlineSigner);
                 let delegatorAddress = compassAddr
-                let validatorAddress = "seivaloper1t9fq3qfm7ngau5gr8qgf5dpfzjqg79kf65cu04"
+                let validatorAddress = stakeValidatorAddress
                 // Construct the message to undelegate from the specific validator
                 // let sha = (share * (10 ** 6))
-                
-                const amount = coin(share, "usei"); // Undelegate 1 SEI (adjust amount as needed)
-                const msgUndelegate = {
-                    typeUrl: "/cosmos.staking.v1beta1.MsgUndelegate",
-                    value: {
-                        delegatorAddress,
-                        validatorAddress,
-                        amount,
-                    },
-                };
+                // console.log(share, 'share');
+                let shares = (share * (10 ** 6))
 
-                // Combine the claim and undelegate messages into a single transaction
-                const fee = {
-                    amount: [{ denom: "usei", amount: "5000" }], // Specify fee, adjust as needed
-                    gas: "200000", // Specify gas limit, adjust as needed
-                };
-
-                // Broadcast the transaction
-                // const rewardsResponse = await client.distribution.delegationTotalRewards(delegatorAddress);
-                const result = await client.signAndBroadcast(delegatorAddress, [msgUndelegate], fee, "Undelegate and claim rewards from Imperator.co");
-
-                // // Check if the transaction was successful
-                // //   assertIsBroadcastTxSuccess(result);
-
-             
-                if (result.code === 0) {
-                    await GetStakeDetails()
-                    const response = await Axios.post('/users/WithdrawRequest', { id: da }, {
-                        headers: { Authorization: window.localStorage.getItem("token") }
-                    })
-                    toast.success("Unstaked successfully")
-                } else if (result.code === 19) {
-                    toast.error("No Stake available")
-                } else {
-                    toast.error("Something Went Wrong")
+                console.log(shares, 'shares');
+                if (stakeAmount > shares) {
+                    toast.error("Invalid stake amount")
+                    setOpen(false)
                 }
-            } else {
+                else {
+                    let amo = stakeAmount * (10 ** 6)
+                    console.log(amo, 'amount');
+                    const amount = coin(amo, "usei");// Undelegate 1 SEI (adjust amount as needed)
+                    const msgUndelegate = {
+                        typeUrl: "/cosmos.staking.v1beta1.MsgUndelegate",
+                        value: {
+                            delegatorAddress,
+                            validatorAddress,
+                            amount,
+                        },
+                    };
+
+                    // Combine the claim and undelegate messages into a single transaction
+                    const fee = {
+                        amount: [{ denom: "usei", amount: "5000" }], // Specify fee, adjust as needed
+                        gas: "200000", // Specify gas limit, adjust as needed
+                    };
+
+                    // Broadcast the transaction
+                    // const rewardsResponse = await client.distribution.delegationTotalRewards(delegatorAddress);
+                    const result = await client.signAndBroadcast(delegatorAddress, [msgUndelegate], fee, "Undelegate and claim rewards from Imperator.co");
+                    console.log(result, 'result');
+                    // // Check if the transaction was successful
+                    // //   assertIsBroadcastTxSuccess(result);
+
+
+                    if (result.code === 0) {
+                        await GetStakeDetails()
+                        const response = await Axios.post('/users/WithdrawRequest', { id: userId }, {
+                            headers: { Authorization: window.localStorage.getItem("token") }
+                        })
+                        if (response.data.success == true) {
+                            setOpen(false)
+                            toast.success("Unstaked successfully")
+                            await GetStakeDetails()
+                        }
+                    } else if (result.code === 19) {
+                        setOpen(false)
+                        toast.error("No Stake available")
+                    } else {
+                        setOpen(false)
+                        toast.error("Something Went Wrong")
+                    }
+                }
+            }
+            else {
+                setOpen(true)
                 await window.leap.enable("pacific-1");
                 const offlineSigner = window.leap.getOfflineSigner("pacific-1");
                 const client = await SigningStargateClient.connectWithSigner("https://sei-rpc.brocha.in", offlineSigner);
+                // console.log(client, 'client');
                 let delegatorAddress = leapAddr
-                let validatorAddress = "seivaloper1t9fq3qfm7ngau5gr8qgf5dpfzjqg79kf65cu04"
+                let validatorAddress = stakeValidatorAddress
                 // Construct the message to undelegate from the specific validator
-               
-                const amount = coin(share, "usei"); // Undelegate 1 SEI (adjust amount as needed)
-                const msgUndelegate = {
-                    typeUrl: "/cosmos.staking.v1beta1.MsgUndelegate",
-                    value: {
-                        delegatorAddress,
-                        validatorAddress,
-                        amount,
-                    },
-                };
-               
-                // Combine the claim and undelegate messages into a single transaction
-                const fee = {
-                    amount: [{ denom: "usei", amount: "5000" }], // Specify fee, adjust as needed
-                    gas: "200000", // Specify gas limit, adjust as needed
-                };
 
-                // Broadcast the transaction
-                // const rewardsResponse = await client.distribution.delegationTotalRewards(delegatorAddress);
-                const result = await client.signAndBroadcast(delegatorAddress, [msgUndelegate], fee, "Undelegate and claim rewards from Imperator.co");
+                console.log(share, 'share');
+                if (stakeAmount > share) {
+                    toast.error("Invalid stake amount")
+                    setOpen(false)
+                }
+                else {
+                    let amo = stakeAmount * (10 ** 6)
+                    // let amo = parseFloat(am).toFixed(0)
+                    const amount = coin(amo, "usei");// Undelegate 1 SEI (adjust amount as needed)
 
-                // // Check if the transaction was successful
-                // //   assertIsBroadcastTxSuccess(result);
+                    const msgUndelegate = {
+                        typeUrl: "/cosmos.staking.v1beta1.MsgUndelegate",
+                        value: {
+                            delegatorAddress,
+                            validatorAddress,
+                            amount,
+                        },
+                    };
 
-                if (result.code === 0) {
-                    await GetStakeDetails()
-                    const response = await Axios.post('/users/WithdrawRequest', { id: da }, {
-                        headers: { Authorization: window.localStorage.getItem("token") }
-                    })
-                    toast.success("Unstaked successfully")
-                } else if (result.code === 19) {
-                    toast.error("No Stake available")
-                } else {
-                    toast.error("Something Went Wrong")
+                    // Combine the claim and undelegate messages into a single transaction
+                    const fee = {
+                        amount: [{ denom: "usei", amount: "5000" }], // Specify fee, adjust as needed
+                        gas: "200000", // Specify gas limit, adjust as needed
+                    };
+
+                    // Broadcast the transaction
+                    // const rewardsResponse = await client.distribution.delegationTotalRewards(delegatorAddress);
+                    const result = await client.signAndBroadcast(delegatorAddress, [msgUndelegate], fee, "Undelegate and claim rewards from Imperator.co");
+                    console.log(result, 'result');
+                    // // Check if the transaction was successful
+                    // //   assertIsBroadcastTxSuccess(result); 
+
+                    if (result.code === 0) {
+                        await GetStakeDetails()
+                        const response = await Axios.post('/users/WithdrawRequest', { id: userId }, {
+                            headers: { Authorization: window.localStorage.getItem("token") }
+                        })
+                        if (response.data.success == true) {
+                            setOpen(false)
+                            toast.success("Unstaked successfully")
+                            await GetStakeDetails()
+                        }
+                    } else if (result.code === 19) {
+                        setOpen(false)
+                        toast.error("No Stake available")
+                    } else {
+                        setOpen(false)
+                        toast.error("Something Went Wrong")
+                    }
                 }
             }
-
-
         } catch (error) {
+            setOpen(false)
             toast.error("Transaction Reverted")
+            console.log(error, 'unstake error');
         }
     }
 
@@ -621,93 +781,192 @@ function Stacking() {
         getreward()
     }, [])
 
+    const getAdminFee = async () => {
+        try {
+            const response = await Axios.post('/users/getadminfee')
+            // console.log(response, 'getadminfee');
+            if (response.data.success) {
+                setAdminFee(response.data.result.adminfee)
+                getAdminAddr()
+            }
+        } catch (error) {
+            console.log(error, 'err in get admin fee');
+        }
+    }
+    // console.log(adminFee, 'adminfee');
+
+
 
     const stake = async () => {
+       try {
         if (window.localStorage.getItem("address") === null && window.localStorage.getItem("leapaddress") === null) {
             toast.error("Connect Your Wallet")
         }
         else if (stakeinput.current.value > seibal) {
             toast.error("Insufficient Fund In you Wallet")
+        }else if(stakeinput.current.value  === ""){
+            toast.error("Please Enter the Stake Amount")
+        }
+        else if(defaultValue === "Select Any Validator"){
+              toast.error("Please Select Validator")
         }
         else {
             const addres = window.localStorage.getItem("address")
             const Leapaddr = window.localStorage.getItem("leapaddress")
             if (addres) {
-              
+                setOpen(true)
                 const offlineSigner = window.compass.getOfflineSigner("pacific-1");
-               
+
                 const client = await SigningStargateClient.connectWithSigner(
                     "https://sei-rpc.brocha.in", // Replace with actual RPC endpoint
                     offlineSigner
                 );
                 const senderAddress = addres;
-             
+
 
                 try {
                     const fee = {
                         amount: [{ denom: "usei", amount: "5000" }], // Example fee, adjust based on the network
-                        gas: "2000000", // Example gas limit, adjust based on the network sei1e8mfjzkrvdqugn9z29qwxzzc4vwm0vwxhgencd
+                        gas: "200000", // Example gas limit, adjust based on the network sei1e8mfjzkrvdqugn9z29qwxzzc4vwm0vwxhgencd
                     };
-                    const amountInUtokens = { // Make sure to convert the amount to the smallest unit, e.g., usei for SEI tokens.
+                    // const amountInUtokens = { // Make sure to convert the amount to the smallest unit, e.g., usei for SEI tokens.
+                    //     denom: 'usei', // Adjust the denomination for SEI tokens
+                    //     amount: String(stakeinput.current.value * (10 ** 6)), // Convert amount to string
+                    // };
+
+                    // console.log(amountInUtokens, 'amountInUtokens');
+
+
+                    // console.log(typeof stakeinput.current.value, 'stakeinput.current.value ');
+                    const Adminfee = Number(stakeinput.current.value) / 100
+                    // console.log(Adminfee, 'perrr');
+                    const adminFeePer = Number(Adminfee) * Number(adminFee)
+                    // const adminFeePer = Adminfee * adminFee
+                    // console.log(adminFeePer, 'adminFeePer');
+
+                    const amountinPer = {
+                        amount: String(adminFeePer * (10 ** 6)),
+                    };
+
+                    // console.log(amountinPer, 'amountinPer');
+
+                    const amount = Number(stakeinput.current.value) - adminFeePer
+                    // console.log(amount, 'delegator amount');
+
+                    const delegatorAmount = { // Make sure to convert the amount to the smallest unit, e.g., usei for SEI tokens.
                         denom: 'usei', // Adjust the denomination for SEI tokens
-                        amount: String(stakeinput.current.value * (10 ** 6)), // Convert amount to string
+                        amount: String(amount * (10 ** 6)), // Convert amount to string
                     };
+                    // console.log(delegatorAmount, 'delegatorAmount');
 
-
-                    const result = await client.delegateTokens(senderAddress, "seivaloper1t9fq3qfm7ngau5gr8qgf5dpfzjqg79kf65cu04", amountInUtokens, fee);
-                    const ba = await getreward()
-                    const Transactionhash = result.transactionHash
-                    if (Transactionhash) {
-                        const response = await Axios.post('/users/stake', { amount: stakeinput.current.value, reward: ba, transactionhash: Transactionhash },
-                            { headers: { Authorization: window.localStorage.getItem('token') } })
-                        if (response.data.success == true) {
-                            toast.success("Stacked Successfully")
+                    const sendResponse = await client.sendTokens(senderAddress, adminAddr, [amountinPer], fee);
+                    if (sendResponse.transactionHash) {
+                        const result = await client.delegateTokens(senderAddress, validatorAddress, delegatorAmount, fee);
+                        console.log(result, 'result');
+                        const ba = await getreward()
+                        const Transactionhash = result.transactionHash
+                        if (Transactionhash) {
+                            const response = await Axios.post('/users/stake',
+                                {
+                                    amount: stakeinput.current.value,
+                                    reward: ba,
+                                    transactionhash: Transactionhash,
+                                    adminfee: adminFeePer,
+                                    validatoraddress: validatorAddress
+                                },
+                                { headers: { Authorization: window.localStorage.getItem('token') } })
+                            if (response.data.success == true) {
+                                setOpen(false)
+                                stakeinput.current.value = 0
+                                toast.success("Stacked Successfully")
+                            }
                         }
                     }
                 } catch (error) {
                     console.error("Failed to send SEI tokens:", error);
+                    setOpen(false)
                     toast.error("Transaction Reverted")
                 }
             }
             else if (Leapaddr) {
-
+                setOpen(true)
                 const offlineSigner = window.leap.getOfflineSigner("pacific-1");
-          
+
                 const client = await SigningStargateClient.connectWithSigner(
                     "https://sei-rpc.brocha.in", // Replace with actual RPC endpoint
                     offlineSigner
                 );
-              
-                const senderAddress = Leapaddr;
 
+                const senderAddress = Leapaddr;
 
                 try {
                     const fee = {
                         amount: [{ denom: "usei", amount: "5000" }], // Example fee, adjust based on the network
                         gas: "200000", // Example gas limit, adjust based on the network
                     };
-                    const amountInUtokens = { // Make sure to convert the amount to the smallest unit, e.g., usei for SEI tokens.
-                        denom: 'usei', // Adjust the denomination for SEI tokens
-                        amount: String(stakeinput.current.value * (10 ** 6)), // Convert amount to string
+                    // const amountInUtokens = { // Make sure to convert the amount to the smallest unit, e.g., usei for SEI tokens.
+                    //     denom: 'usei', // Adjust the denomination for SEI tokens
+                    //     amount: String(stakeinput.current.value * (10 ** 6)), // Convert amount to string
+                    // };
+
+                    // console.log(typeof stakeinput.current.value, 'stakeinput.current.value ');
+                    const Adminfee = Number(stakeinput.current.value) / 100
+                    // console.log(typeof Adminfee, 'perrr');
+                    const adminFeePer = Number(Adminfee) * Number(adminFee)
+                    // console.log(adminFeePer, 'adminFeePer');
+
+                    const amountinPer = {
+                        denom: 'usei',
+                        amount: String(adminFeePer * (10 ** 6)),
                     };
 
-                    const result = await client.delegateTokens(senderAddress, "seivaloper1t9fq3qfm7ngau5gr8qgf5dpfzjqg79kf65cu04", amountInUtokens, fee);
-                   
+                    // console.log(amountinPer, 'amountinPer');
+
+                    const amount = Number(stakeinput.current.value) - adminFeePer
+                    // console.log(amount, 'delegator amount');
+
+                    const delegatorAmount = {
+                        denom: 'usei',
+                        amount: String(amount * (10 ** 6)),
+                    };
+                    // console.log(delegatorAmount, 'delegatorAmount');
+
+                    // const sendResponse = await client.sendTokens(senderAddress, adminAddr, [amountinPer], fee);
+                    // console.log(sendResponse, 'sendtokens');
+
+                    // if (sendResponse.transactionHash) {
+                    const result = await client.delegateTokens(senderAddress, validatorAddress, delegatorAmount, fee);
                     const ba = await getreward()
                     const Transactionhash = result.transactionHash
                     if (Transactionhash) {
-                        const response = await Axios.post('/users/stake', { amount: stakeinput.current.value, reward: ba, transactionhash: Transactionhash },
+                        const response = await Axios.post('/users/stake',
+                            {
+                                amount: stakeinput.current.value,
+                                reward: ba,
+                                transactionhash: Transactionhash,
+                                adminfee: adminFeePer,
+                                validatoraddress: validatorAddress
+                            },
                             { headers: { Authorization: window.localStorage.getItem('token') } })
                         if (response.data.success == true) {
+                            setOpen(false)
+                            stakeinput.current.value = 0
                             toast.success("Stacked Successfully")
                         }
                     }
+                    // }
+
+
                 } catch (error) {
                     console.error("Failed to send SEI tokens:", error);
+                    setOpen(false)
                     toast.error("Transaction Reverted")
                 }
             }
         };
+       } catch (error) {
+         console.log(error,"error");
+       }
 
     }
 
@@ -716,6 +975,7 @@ function Stacking() {
         const CompassAddr = window.localStorage.getItem('address')
         const LeapAddr = window.localStorage.getItem('leapaddress')
         if (CompassAddr) {
+
             try {
                 const rpcEndpoint = "https://sei-rpc.brocha.in";
                 const clientQuery = await SigningCosmWasmClient.connect(rpcEndpoint);
@@ -726,15 +986,13 @@ function Stacking() {
                     }
                 };
                 const queryResponse = await clientQuery.queryContractSmart(CONTRACT_ADDR, queryMsg);
-                let TokenArray = []
-                TokenArray.push(queryResponse.tokens[0])
 
+                const imageArray = []
+                for (let i = 0; i < queryResponse.tokens.length; i++) {
 
-                for (let i = 0; i < TokenArray.length; i++) {
+                    const tokenid = queryResponse.tokens[i]
 
-                    const tokenid = TokenArray[i]
-                    const imageArray = []
-                    if (tokenid != undefined) {
+                    if (token != undefined) {
                         const allnfttokens = {
                             "all_nft_info": {
                                 "token_id": Number(tokenid).toString()
@@ -756,16 +1014,17 @@ function Stacking() {
                             let Imgobj = { name, imageUrl }
 
                             imageArray.push(Imgobj)
-
                         }
                     }
 
-                    setImageArray(imageArray)
                 }
+                setImageArray(imageArray)
+
             } catch (error) {
-                console.log(error, 'getimage error');
+                console.log(error, 'getimage err');
             }
         }
+
         else if (LeapAddr) {
 
             try {
@@ -778,17 +1037,14 @@ function Stacking() {
                     }
                 };
                 const queryResponse = await clientQuery.queryContractSmart(CONTRACT_ADDR, queryMsg);
-                let TokenArray = []
-                TokenArray.push(queryResponse.tokens[0])
 
+                const imageArray = []
+                for (let i = 0; i < queryResponse.tokens.length; i++) {
 
+                    const tokenid = queryResponse.tokens[i]
 
-                for (let i = 0; i < TokenArray.length; i++) {
-                 
-                    const tokenid = TokenArray[i]
-
-                    const imageArray = []
-                    if (tokenid != undefined) {
+                    const token = tokenid[i]
+                    if (token != undefined) {
                         const allnfttokens = {
                             "all_nft_info": {
                                 "token_id": Number(tokenid).toString()
@@ -804,17 +1060,17 @@ function Stacking() {
 
                         for (let i = 0; i < tokeUriArray.length; i++) {
                             const imageResponse = await axios.get(tokeUriArray[i])
-                          
+
                             const name = imageResponse.data.name
                             const imageUrl = imageResponse.data.image
                             let Imgobj = { name, imageUrl }
-                            
-                            imageArray.push(Imgobj)
 
+                            imageArray.push(Imgobj)
                         }
                     }
-                    setImageArray(imageArray)
+
                 }
+                setImageArray(imageArray)
 
             } catch (error) {
                 console.log(error, 'getimage err');
@@ -826,7 +1082,6 @@ function Stacking() {
     }
 
 
-
     const GetStakeDetails = async () => {
         getImage()
         GetNftStake()
@@ -835,10 +1090,9 @@ function Stacking() {
                 headers: { Authorization: window.localStorage.getItem("token") }
             })
 
-
-
             if (response.data.success == true) {
                 setGetStake(response.data.result)
+
             }
             else {
                 console.log('erron in getting stake details');
@@ -854,7 +1108,7 @@ function Stacking() {
             const response = await Axios.post('/users/getNFT', {}, {
                 headers: { Authorization: window.localStorage.getItem('token') }
             })
-          
+
             if (response.data.success == true) {
                 setGetNFTstake(response.data.result)
             }
@@ -917,9 +1171,11 @@ function Stacking() {
         const response = await Axios.post('/alldata')
         setTotalUser(response.data.user)
         const amount = response.data.data[0].totalAmount
-        const seiUSDT = 0.90
-        const usdt = seiUSDT * amount
-        setTotalAmount(usdt)
+        // const seiUSDT = 0.90
+        // console.log(amount,"usdt");
+        const usdt = datatusd.c * amount
+        setTotse(amount)
+        setTotalAmount(parseFloat(usdt).toFixed(2))
     }
 
     const TotalNFT = async () => {
@@ -955,7 +1211,7 @@ function Stacking() {
                 headers: { Authorization: window.localStorage.getItem('token') }
             })
             if (response.data.success == true) {
-                setUserTotalReward(response.data.data[0].totalReward)
+                setUserTotalReward((response.data.data[0].totalReward).toFixed(2))
             }
         } catch (error) {
             console.log(error, 'err');
@@ -964,42 +1220,77 @@ function Stacking() {
 
     const Unstake = async (id) => {
         try {
+            setOpen(true)
             const response = await Axios.post('/users/unstakeNFt', { id }, {
                 headers: { Authorization: window.localStorage.getItem('token') }
             })
 
             if (response.data.result) {
+                setOpen(false)
                 toast.error(`You can Unstake after ${response.data.result} days`)
-                GetNftStake()
+                await GetNftStake()
             }
             else if (response.data.success == true) {
+                setOpen(false)
                 toast.success('unstake successfully')
-                GetNftStake()
+                await GetNftStake()
             }
         } catch (error) {
+            setOpen(false)
             console.log('error in unstakenft', error);
         }
     }
 
     const Claim = async (id) => {
         try {
+            setOpen(true)
             const response = await Axios.post('/users/claimNFT', { id }, {
                 headers: { Authorization: window.localStorage.getItem('token') }
             })
             if (response.data.success) {
+                setOpen(false)
                 toast.success(response.data.message)
             }
         } catch (error) {
+            setOpen(false)
             console.log('error in claimnft', error);
         }
 
     }
 
-    const token = window.localStorage.getItem('token')
+    const getValidators = async () => {
+        try {
+            const response = await Axios.post('/users/getValidators')
+            // console.log(response, 'getvalidators');
+            const valiArray = []
+
+            for (let i = 0; i < response.data.result.length; i++) {
+                const address = response.data.result[i].validatoraddress
+                const client = await SigningStargateClient.connect("https://sei-rpc.brocha.in");
+                const validators = await client.queryClient.staking.validator(address)
+                console.log(validators, 'validatorssss');
+
+                valiArray.push({
+                    moniker: validators.validator.description.moniker,
+                    operatorAddress: validators.validator.operatorAddress
+                })
+            }
+            setGetvalidators(valiArray)
+            // if (response.data.success == true) {
+            //     setGetvalidators(response.data.result)
+
+            // }
+        } catch (error) {
+            console.log('error in get validators', error);
+        }
+    }
+    // console.log(getvalidators, 'getvalidators');
+
 
     useEffect(() => {
         if (token != null) {
             GetStakeDetails()
+            getValidators()
         }
         else {
             setGetStake([])
@@ -1011,8 +1302,14 @@ function Stacking() {
         TotalNFT()
         TotaluserNFT()
         TotalUserReward()
-        getAllDatas()
+        getAdminFee()
     }, [])
+
+    useEffect(() => {
+        getAllDatas()
+    }, [datatusd])
+
+
 
     return (
 
@@ -1065,10 +1362,10 @@ function Stacking() {
                                             SEI total staked amount
                                         </div>
                                         <div className='st-c2-amount'>
-                                            {totalAmount} USDT
+                                            {totse} SEI
                                         </div>
                                         <div className='st-c2-sub-amount'>
-                                            0.90 SEI
+                                            {totalAmount == "NaN" ? 0 : totalAmount} USDT Value
                                         </div>
                                     </div>
 
@@ -1087,7 +1384,7 @@ function Stacking() {
                                             {totalNFTAmount}
                                         </div>
                                         <div className='st-c2-sub-amount'>
-                                            0.90 SEI
+                                            {/* {totse} SEI */}
                                         </div>
                                     </div>
 
@@ -1198,15 +1495,56 @@ function Stacking() {
                                                                 variant="outlined"
 
                                                             />
-                                                            <p className='connect-compas'>Connect your Compass wallet to see your SEI balance</p>
+                                                            <p className='connect-compas'>Connect your Compass wallet to see your SEI balance <span>Admin Fee: {adminFee}%</span></p>
+                                                        </div>
+                                                        <div className='stake-input2'>
+                                                            <FormControl sx={{ m: 1 }} className='stake-input2'>
+                                                                <Select
+                                                                    value={defaultValue}
+                                                                    onChange={handleSelectChange}
+                                                                    displayEmpty
+                                                                    className='stake-input2'
+                                                                    inputProps={{ 'aria-label': 'Without label' }}
+                                                                >
+                                                                    <MenuItem value="Select Any Validator">Select Validator</MenuItem>
+                                                                    {getvalidators.map((data, index) => (
+                                                                        <MenuItem key={index} value={data.moniker}>
+                                                                            {data.moniker.toUpperCase()}
+                                                                        </MenuItem>
+                                                                    ))}
+                                                                    {/* <MenuItem value="">
+                                                                        <em>None</em>
+                                                                    </MenuItem>
+                                                                    <MenuItem key={data._id} value={data.validatorAddress}>{data.validatorAddress}</MenuItem> */}
+                                                                </Select>
+                                                            </FormControl>
                                                         </div>
                                                         <div>
-                                                            <Button className='stack-tab-btn'
-                                                                onClick={stake}>
-                                                                Stake
-                                                            </Button>
+                                                            {open ? (
+                                                                <>
+                                                                    <Button className='stack-tab-btn' > Stake</Button>
+
+                                                                    <Backdrop
+                                                                        sx={{ color: '#fff', backdropFilter: 'blur(10px)', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                                                                        open={open}
+                                                                        onClick={handleClose}
+                                                                    >
+                                                                        <img src={load} />
+                                                                    </Backdrop>
+                                                                </>
+
+
+                                                            ) : (
+                                                                <Button className='stack-tab-btn'
+                                                                    onClick={() => {
+                                                                        getAdminFee()
+                                                                        stake()
+                                                                    }}>
+                                                                    Stake
+                                                                </Button>
+                                                            )}
                                                         </div>
-                                                        <div className='stack-tab-footer-main'>
+                                                        {/* <div className='stack-tab-footer-main'>
                                                             <div className='foot-inner-div'>
                                                                 <div className='foot-tab-inner-cont'>
                                                                     <img src={ft1} alt='ft1' />
@@ -1253,7 +1591,7 @@ function Stacking() {
                                                                     Reward fee
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </div> */}
                                                     </div>
                                                 </CustomTabPanel>
                                                 <CustomTabPanel value={values} index={1}>
@@ -1334,12 +1672,58 @@ function Stacking() {
                                                                                                     <TableCell >{row?.diffDays}</TableCell>
                                                                                                     <TableCell >{FormatDate(row.Lastdate)}</TableCell>
                                                                                                     <TableCell>
-                                                                                                        {row?.unstake === "true" ? <>{row?.balday} Days Left</> : <Button className='succes-btn' onClick={claimre} >
-                                                                                                            Claim
-                                                                                                        </Button>}
+                                                                                                        {row?.unstake === "true" ? <>{row?.balday} Days Left</> :
+                                                                                                            <>
+                                                                                                                {
+                                                                                                                    open ? (
+                                                                                                                        <>
+                                                                                                                            <Button className='succes-btn' > Claim </Button>
+
+                                                                                                                            <Backdrop
+                                                                                                                                sx={{ color: '#fff', backdropFilter: 'blur(10px)', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                                                                                                                                open={open}
+                                                                                                                                onClick={handleClose}
+                                                                                                                            >
+                                                                                                                                <img src={load} />
+                                                                                                                            </Backdrop>
+                                                                                                                        </>
+                                                                                                                    ) : (
+                                                                                                                        <Button className='succes-btn' onClick={() => { claimre(row.validatoraddress) }} >
+                                                                                                                            Claim
+                                                                                                                        </Button>
+                                                                                                                    )
+                                                                                                                }
+                                                                                                            </>
+                                                                                                        }
                                                                                                     </TableCell>
                                                                                                     <TableCell >
-                                                                                                        {row?.unstake === "true" ? <>{row?.balday} Days Left</> : <Button className='succes-btn' onClick={() => unstakre(row.id)}>Unstake</Button>}
+                                                                                                        {row?.unstake === "true" ? <>{row?.balday} Days Left</> :
+                                                                                                            <>
+                                                                                                                {
+                                                                                                                    open ? (
+                                                                                                                        <>
+                                                                                                                            <Button className='succes-btn' > Unstake </Button>
+
+                                                                                                                            <Backdrop
+                                                                                                                                sx={{ color: '#fff', backdropFilter: 'blur(10px)', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                                                                                                                                open={open}
+                                                                                                                                onClick={handleClose}
+                                                                                                                            >
+                                                                                                                                <img src={load} />
+                                                                                                                            </Backdrop>
+                                                                                                                        </>
+                                                                                                                    ) : (
+                                                                                                                        // <Button className='succes-btn' onClick={() => unstakre(row.id)}>Unstake</Button>
+                                                                                                                        <Button className='succes-btn' onClick={() => {
+                                                                                                                            handleOpen2(row?.Amount, row.id, row.validatoraddress)
+                                                                                                                        }
+                                                                                                                        }>Unstake</Button>
+
+                                                                                                                    )
+                                                                                                                }
+                                                                                                            </>
+                                                                                                        }
+
                                                                                                     </TableCell>
 
                                                                                                 </TableRow>
@@ -1356,8 +1740,8 @@ function Stacking() {
                                                             </Grid>
 
                                                         </div>
-                                        
-                                                        <div className='yourstack'>
+
+                                                        {/* <div className='yourstack'>
                                                             You stake
                                                         </div>
                                                         <div className='stake-input2'>
@@ -1381,8 +1765,8 @@ function Stacking() {
                                                             <Button className='stack-tab-btn'>
                                                                 Stake
                                                             </Button>
-                                                        </div>
-                                                        <div className='stack-tab-footer-main'>
+                                                        </div> */}
+                                                        {/* <div className='stack-tab-footer-main'>
                                                             <div className='foot-inner-div'>
                                                                 <div className='foot-tab-inner-cont'>
                                                                     <img src={ft1} alt='ft1' />
@@ -1405,8 +1789,8 @@ function Stacking() {
                                                                     Exchange rate
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div className='stack-tab-footer-main'>
+                                                        </div> */}
+                                                        {/* <div className='stack-tab-footer-main'>
                                                             <div className='foot-inner-div'>
                                                                 <div className='foot-tab-inner-cont'>
                                                                     <img src={ft1} alt='ft1' />
@@ -1429,7 +1813,7 @@ function Stacking() {
                                                                     Reward fee
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </div> */}
                                                     </div>
                                                 </CustomTabPanel>
 
@@ -1449,10 +1833,10 @@ function Stacking() {
                                                 <div className='your-collection'>
                                                     Your collectibles
                                                     <div className='total-collect'>
-                                                        Total: {totalUserNFTAmount} Astro Guys
+                                                        Total: {imagearray.length} Astro Guys
                                                     </div>
                                                 </div>
-                                       
+
                                             </div>
                                             <Grid container spacing={2} sx={{ marginTop: '20px' }} className='card-cont-yc'>
 
@@ -1467,7 +1851,7 @@ function Stacking() {
                                                                             image={obj.imageUrl}
                                                                             title="green iguana"
                                                                         />
-                                                                        <CardContent>
+                                                                        <CardContent style={{ padding: '16px 0px 16px' }}>
                                                                             <div className='card-txt-yc'>
                                                                                 {obj.name}
                                                                             </div>
@@ -1476,9 +1860,27 @@ function Stacking() {
                                                                     </div> */}
                                                                         </CardContent>
                                                                         <CardActions className='card-action'>
-                                                                            <Button size="small" onClick={() => {
-                                                                                SendNFT(obj.name)
-                                                                            }}>stake</Button>
+                                                                            {
+                                                                                open ? (
+                                                                                    <>
+                                                                                        <Button size="small" > stake </Button>
+
+                                                                                        <Backdrop
+                                                                                            sx={{ color: '#fff', backdropFilter: 'blur(10px)', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                                                                                            open={open}
+                                                                                            onClick={handleClose}
+                                                                                        >
+                                                                                            <img src={load} />
+                                                                                        </Backdrop>
+                                                                                    </>
+                                                                                ) : (
+                                                                                    <Button size="small" onClick={() => {
+                                                                                        getAdminAddr()
+                                                                                        SendNFT(obj.name)
+                                                                                    }}>stake</Button>
+                                                                                )
+                                                                            }
+
                                                                         </CardActions>
                                                                     </Card>
                                                                 </Grid>
@@ -1540,7 +1942,7 @@ function Stacking() {
                                                         You can unstake them after 21 days.
                                                     </div>
                                                 </div>
-                                              
+
                                             </div>
 
                                             <div className='stack-tacb-c2 stktable'>
@@ -1570,17 +1972,37 @@ function Stacking() {
                                                                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                                                         >
                                                                             <TableCell >{FormatAddress(row.userId.address)}</TableCell>
-                                                                            <TableCell >{row.reward}</TableCell>
+                                                                            <TableCell >{(row.reward).toFixed(2)}</TableCell>
                                                                             <TableCell >{row.currentday}</TableCell>
                                                                             <TableCell >{convert(row.lastday)}</TableCell>
                                                                             {/* <TableCell >16.03.2024</TableCell> */}
                                                                             <TableCell >
                                                                                 {row.unstake == 0 ? (
-                                                                                    <Button onClick={() => {
-                                                                                        Unstake(row._id)
-                                                                                    }}>
-                                                                                        Unstake
-                                                                                    </Button>
+                                                                                    <>
+                                                                                        {
+                                                                                            open ? (
+                                                                                                <>
+                                                                                                    <Button > Unstake </Button>
+
+                                                                                                    <Backdrop
+                                                                                                        sx={{ color: '#fff', backdropFilter: 'blur(10px)', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                                                                                                        open={open}
+                                                                                                        onClick={handleClose}
+                                                                                                    >
+                                                                                                        <img src={load} />
+                                                                                                    </Backdrop>
+                                                                                                </>
+                                                                                            ) : (
+                                                                                                <Button onClick={() => {
+                                                                                                    Unstake(row._id)
+                                                                                                }}>
+                                                                                                    Unstake
+                                                                                                </Button>
+                                                                                            )
+
+                                                                                        }
+                                                                                    </>
+
                                                                                 ) : (
                                                                                     <Button>
                                                                                         Pending
@@ -1594,11 +2016,30 @@ function Stacking() {
                                                                                             Unable to Claim
                                                                                         </label>
                                                                                     ) : (
-                                                                                        <Button className='succes-btn' onClick={() => {
-                                                                                            Claim(row._id)
-                                                                                        }} >
-                                                                                            Claim
-                                                                                        </Button>
+                                                                                        <>
+                                                                                            {
+                                                                                                open ? (
+                                                                                                    <>
+                                                                                                        <Button > Unstake </Button>
+
+                                                                                                        <Backdrop
+                                                                                                            sx={{ color: '#fff', backdropFilter: 'blur(10px)', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                                                                                                            open={open}
+                                                                                                            onClick={handleClose}
+                                                                                                        >
+                                                                                                            <img src={load} />
+                                                                                                        </Backdrop>
+                                                                                                    </>
+                                                                                                ) : (
+                                                                                                    <Button className='succes-btn' onClick={() => {
+                                                                                                        Claim(row._id)
+                                                                                                    }} >
+                                                                                                        Claim
+                                                                                                    </Button>
+                                                                                                )
+                                                                                            }
+                                                                                        </>
+
                                                                                     )
                                                                                 }
 
@@ -1609,14 +2050,14 @@ function Stacking() {
 
                                                                 </>
                                                             )}
-                                                           
+
                                                         </TableBody>
                                                     </Table>
                                                 </TableContainer>
 
                                             </div>
 
-                                        
+
                                         </div>
 
                                     </Grid>
@@ -1635,7 +2076,7 @@ function Stacking() {
                                                     </div>
                                                 </div>
                                                 <div className='buy-pallet-btn'>
-                                                    <Button>
+                                                    <Button onClick={handlePallet}>
                                                         Buy on Pallet
                                                         <div className='sub-btn-pallet'>
                                                             FP: 100 SEI
@@ -1704,7 +2145,44 @@ function Stacking() {
                                 </Stack>
                             </Grid>
                         </Grid>
+                        <Modal
+                            open={open2}
 
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description"
+                        >
+                            <Box sx={style}>
+                                <div className='pop-wallet-head'>
+                                    Enter the Amount
+                                </div>
+                                <div className='pop-close'>
+                                    <CancelOutlinedIcon onClick={handleClose2} />
+                                </div>
+                                <div className='form-controls'>
+                                    <FormControl fullWidth sx={{ m: 1 }}>
+
+                                        <Input
+                                            id="standard-adornment-amount"
+                                            startAdornment={<InputAdornment position="start"></InputAdornment>}
+                                            type='number'
+                                            value={stakeAmount}
+                                            onChange={(e) => { setStakeAmount(e.target.value) }}
+                                            placeholder='0.0'
+                                        />
+                                    </FormControl>
+                                </div>
+                                <div className='stktable model'>
+                                    <Button onClick={() => {
+                                        handleClose2()
+                                        unstakre(stakeAmount, userId)
+                                    }}>
+                                        Submit
+                                    </Button>
+                                </div>
+
+
+                            </Box>
+                        </Modal>
                     </Box>
                 </Box>
             </div >

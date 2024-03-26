@@ -60,6 +60,9 @@ function SideBar(props) {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
+    const handleDocs = async () => {
+        window.open('https://docs.astrohub.io/');
+    }
 
     const handleCampass = async () => {
         window.open("https://chromewebstore.google.com/detail/compass-wallet-for-sei/anokgmphncpekkhclmingpimjmcooifb");
@@ -144,20 +147,20 @@ function SideBar(props) {
 
             const rpcEndpoint = "https://sei-rpc.brocha.in";  // e.g., "http://localhost:26657"
             const client = await StargateClient.connect(rpcEndpoint);
-           
+
             try {
-        
+
                 /* MetaMask is installed */
                 await window.leap.enable("pacific-1");
                 const offlineSigner = window.leap.getOfflineSigner("pacific-1");
                 const accounts = await offlineSigner.getAccounts();
-               
+
 
                 let addres = accounts[0].address
 
                 const balances = await client.getAllBalances(addres);
 
-               
+
                 window.localStorage.setItem("leapaddress", accounts[0].address)
                 let add = accounts[0].address.slice(0, 6) + "......" + accounts[0].address.slice(36, 42)
                 setWallet(add)
@@ -165,14 +168,14 @@ function SideBar(props) {
                 const response = await Axios.post('/users/register', { address: addres }, {
                     headers: { Authorization: window.localStorage.getItem('token') }
                 })
-               
+
                 if (response.data.success == true) {
                     const token = response.data.result.token
-                   
+
                     window.localStorage.setItem('token', token)
-                    
+
                     toast.success(response.data.message)
-                    
+
                 }
 
             } catch (err) {
@@ -182,11 +185,10 @@ function SideBar(props) {
         else {
             /* MetaMask is not installed */
             setOpen(true)
-           
+
 
         }
     }
-
 
     const logout = () => {
         const accounts = window.localStorage.getItem("address")
@@ -214,13 +216,13 @@ function SideBar(props) {
             </List>
             <Divider />
             <List className="navlink-list">
-                <NavLink to='/' className={({ isActive }) => (isActive ? 'active' : 'non-active')} ><CottageIcon className="svg-icon" /> Dashboard</NavLink>
-                <NavLink to='/' className={({ isActive }) => (isActive ? 'active' : 'non-active')} ><PortraitIcon className="svg-icon" /> Portfolio</NavLink>
-                <NavLink to='/vibelist' className={({ isActive }) => (isActive ? 'active' : 'non-active')} ><SignalCellularAltIcon className="svg-icon" /> Vibelist</NavLink>
-                <NavLink to='/' className={({ isActive }) => (isActive ? 'active' : 'non-active')} ><FaBridgeWater className="svg-icon" /> Bridge</NavLink>
-                <NavLink to='/' className={({ isActive }) => (isActive ? 'active' : 'non-active')} ><LayersIcon className="svg-icon" /> Staking</NavLink>
-                <NavLink to='/' className={({ isActive }) => (isActive ? 'active' : 'non-active')} ><LayersIcon className="svg-icon" /> WL Market</NavLink>
-                <NavLink to='/' className={({ isActive }) => (isActive ? 'active' : 'non-active')} ><LayersIcon className="svg-icon" /> Buy $GUYS</NavLink>
+                <NavLink to='/dashboard' className={({ isActive }) => (isActive ? 'active' : 'non-active')} ><CottageIcon className="svg-icon" /> Dashboard</NavLink>
+                <NavLink to='/portfolio' className={({ isActive }) => (isActive ? 'active' : 'non-active')} ><PortraitIcon className="svg-icon" /> Portfolio</NavLink>
+                <NavLink to='/' className={({ isActive }) => (isActive ? 'active' : 'non-active')} ><SignalCellularAltIcon className="svg-icon" /> Vibelist</NavLink>
+                <NavLink to='/bridge' className={({ isActive }) => (isActive ? 'active' : 'non-active')} ><FaBridgeWater className="svg-icon" /> Bridge</NavLink>
+                <NavLink to='/staking' className={({ isActive }) => (isActive ? 'active' : 'non-active')} ><LayersIcon className="svg-icon" /> Staking</NavLink>
+                <NavLink to='/market' className={({ isActive }) => (isActive ? 'active' : 'non-active')} ><LayersIcon className="svg-icon" /> WL Market</NavLink>
+                <NavLink to='/buyguys' className={({ isActive }) => (isActive ? 'active' : 'non-active')} ><LayersIcon className="svg-icon" /> Buy $GUYS</NavLink>
             </List>
             <Divider />
             <List className="navlink-list cw">
@@ -247,7 +249,7 @@ function SideBar(props) {
                         Please check our docs
                     </div>
                     <div className="dov-btn-div">
-                        <Button>
+                        <Button onClick={handleDocs}>
                             DOCUMENTATION
                         </Button>
                     </div>
