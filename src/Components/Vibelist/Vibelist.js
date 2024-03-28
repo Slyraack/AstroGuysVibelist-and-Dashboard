@@ -194,7 +194,12 @@ function VibeList() {
                     Discover the most hyped NFT projects on SEI network
                   </div>
 
-                  <div className="read">
+                  <div className="read" onClick={() => {
+          window.open(
+            "https://docs.astrohub.io/",
+            "_blank"
+          );
+        }}>
                     Read documentation
                     <ArrowRightAltIcon />
                   </div>
@@ -317,7 +322,7 @@ function VibeList() {
                       <img src={vibeIcon} height="16px" alt="vibe icon" />
                     </div>
                     <div className="content-sct-1">
-                      You can list your SEI NFT project fro free by filling in
+                      You can list your SEI NFT project from free by filling in
                       the form
                     </div>
                     <a
@@ -424,7 +429,12 @@ function VibeList() {
                   </div>
                   <div style={{ display: "flex", gap: "10px" }}>
                     <div>
-                      <div className="docs">
+                      <div className="docs" onClick={() => {
+          window.open(
+            "https://docs.astrohub.io/",
+            "_blank"
+          );
+        }}>
                         <Button>How vibe indicator works?</Button>
                       </div>
                     </div>
